@@ -1,4 +1,4 @@
-import { Index } from "solid-js"
+import { Index, onMount } from "solid-js"
 import { KANA_MAP } from "./constants"
 import { createStore, produce } from "solid-js/store"
 import { Button } from "~/components/ui/button"
@@ -16,6 +16,10 @@ export function KanaPair() {
     lastSelected: null,
     isSelectable: true,
     score: 0,
+  })
+
+  onMount(() => {
+    setStore("pairs", generatePairs())
   })
 
   const handleClick = (index: number) => {
