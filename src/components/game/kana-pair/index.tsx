@@ -96,7 +96,7 @@ export function KanaPair() {
           }))
         }}
       >
-        重新开始
+        重新生成
       </Button>
     </div>
   )
