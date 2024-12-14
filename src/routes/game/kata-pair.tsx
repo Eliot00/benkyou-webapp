@@ -1,7 +1,20 @@
 import { Index, onMount } from "solid-js"
-import { KANA_MAP } from "./constants"
 import { createStore, produce } from "solid-js/store"
 import { Button } from "~/components/ui/button"
+
+const KANA_MAP = {
+  'あ': 'ア', 'い': 'イ', 'う': 'ウ', 'え': 'エ', 'お': 'オ',
+  'か': 'カ', 'き': 'キ', 'く': 'ク', 'け': 'ケ', 'こ': 'コ',
+  'さ': 'サ', 'し': 'シ', 'す': 'ス', 'せ': 'セ', 'そ': 'ソ',
+  'た': 'タ', 'ち': 'チ', 'つ': 'ツ', 'て': 'テ', 'と': 'ト',
+  'な': 'ナ', 'に': 'ニ', 'ぬ': 'ヌ', 'ね': 'ネ', 'の': 'ノ',
+  'は': 'ハ', 'ひ': 'ヒ', 'ふ': 'フ', 'へ': 'ヘ', 'ほ': 'ホ',
+  'ま': 'マ', 'み': 'ミ', 'む': 'ム', 'め': 'メ', 'も': 'モ',
+  'や': 'ヤ', 'ゆ': 'ユ', 'よ': 'ヨ',
+  'ら': 'ラ', 'り': 'リ', 'る': 'ル', 'れ': 'レ', 'ろ': 'ロ',
+  'わ': 'ワ', 'を': 'ヲ',
+  'ん': 'ン'
+}
 
 type StoreData = {
   pairs: Pair[]
@@ -10,7 +23,7 @@ type StoreData = {
   score: number
 }
 
-export function KanaPair() {
+export default function KataPair() {
   const [store, setStore] = createStore<StoreData>({
     pairs: generatePairs(),
     lastSelected: null,
