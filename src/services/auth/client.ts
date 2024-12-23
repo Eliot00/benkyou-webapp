@@ -1,7 +1,5 @@
-import { action, query } from "@solidjs/router";
+import { query } from "@solidjs/router";
 
-import { getUserServerLoader, signInServerAction } from "./server";
+import { getUserServerLoader } from "./server";
 
-export const getUserLoader = query(getUserServerLoader, "user")
-
-export const signInAction = action(signInServerAction)
+export const getUserLoader = query(getUserServerLoader, "getUser")

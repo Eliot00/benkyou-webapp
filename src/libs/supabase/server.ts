@@ -1,34 +1,24 @@
-import type { FetchEvent } from "@solidjs/start/server";
-import { createServerClient, parseCookieHeader } from "@supabase/ssr"
-import type { SupabaseClient } from "@supabase/supabase-js";
-import { getHeader, setCookie } from "vinxi/http";
+import { createServerClient, parseCookieHeader, serializeCookieHeader } from "@supabase/ssr"
+import { getRequestEvent } from "solid-js/web";
 
-export const supabaseMiddleware = async (event: FetchEvent) => {
-  const supabase = createServerClient(
+export function createClient() {
+  return createServerClient(
     import.meta.env.VITE_SUPABASE_URL,
     import.meta.env.VITE_SUPABASE_ANON_KEY,
     {
       auth: { flowType: "pkce" },
       cookies: {
-        getAll: () => {
-          return parseCookieHeader(
-            getHeader(event.nativeEvent, "Cookie") ?? ""
-          );
+        getAll() {
+          return parseCookieHeader(getRequestEvent()?.request?.headers?.get('Cookie') ?? '');
         },
-        setAll: (cookiesToSet) => {
-          cookiesToSet.forEach(({ name, options, value }) =>
-            setCookie(event.nativeEvent, name, value, options)
-          );
+        setAll(cookiesToSet) {
+          try {
+            cookiesToSet.forEach(({ name, options, value }) =>
+              getRequestEvent()?.response.headers.append('Set-Cookie', serializeCookieHeader(name, value, options))
+            );
+          } catch {}
         }
       }
     }
   )
-
-  event.locals.supabase = supabase;
-}
-
-declare module "@solidjs/start/server" {
-  interface RequestEventLocals {
-    supabase: SupabaseClient
-  }
 }
