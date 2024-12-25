@@ -16,7 +16,7 @@ export default function App() {
           <Title>乐学日语</Title>
           <SidebarProvider>
             <AppSidebar />
-              <main>
+              <main class="w-full h-screen">
                 <SidebarTrigger />
                 <Suspense>{props.children}</Suspense>
               </main>

@@ -84,8 +84,8 @@ export default function KataPair() {
   }
 
   return (
-    <div lang="ja">
-      <div class="m-2">Score: {store.score}</div>
+    <div lang="ja" class="w-full p-2 space-y-2">
+      <div>Score: {store.score}</div>
       <div class="grid grid-cols-4 gap-4">
         <Index each={store.pairs}>
           {(pair, index) => (
@@ -100,7 +100,6 @@ export default function KataPair() {
         </Index>
       </div>
       <Button
-        class="m-2"
         onClick={() => {
           setStore(produce(state => {
             state.pairs = generatePairs()
