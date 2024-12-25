@@ -7,7 +7,7 @@ export const route = {
   }
 } satisfies RouteDefinition
 
-export default function HomePage() {
+export default function GamePage() {
 
   return (
     <div class="w-full">
