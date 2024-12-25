@@ -12,7 +12,7 @@ export default function HomePage() {
   const user = createAsync(() => getUserLoader())
 
   return (
-    <div class="w-screen h-screen">
+    <div class="w-full">
       <Show when={user()} fallback={<A href="/auth/sign-in">Sign In</A>}>
         <div>{user()?.email}</div>
       </Show>

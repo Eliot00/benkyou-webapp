@@ -135,6 +135,6 @@ function countBackground(status: Pair["2"]) {
     case 'error':
       return 'bg-red-200'
     default:
-      return 'bg-transparent'
+      return ''
   }
 }
