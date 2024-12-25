@@ -5,7 +5,8 @@ import { Suspense } from "solid-js";
 import "./app.css"
 import "@unocss/reset/tailwind-compat.css"
 import "virtual:uno.css"
-import { SidebarProvider, SidebarTrigger, Sidebar, SidebarHeader, SidebarGroup, SidebarContent, SidebarFooter } from "~/components/ui/sidebar";
+import { SidebarProvider, SidebarTrigger } from "~/components/ui/sidebar";
+import AppSidebar from "~/components/app-sidebar";
 
 export default function App() {
   return (
@@ -14,18 +15,11 @@ export default function App() {
         <MetaProvider>
           <Title>乐学日语</Title>
           <SidebarProvider>
-            <Sidebar>
-              <SidebarHeader />
-              <SidebarContent>
-                <SidebarGroup />
-                <SidebarGroup />
-              </SidebarContent>
-              <SidebarFooter />
-            </Sidebar>
-            <main>
-              <SidebarTrigger />
-              <Suspense>{props.children}</Suspense>
-            </main>
+            <AppSidebar />
+              <main>
+                <SidebarTrigger />
+                <Suspense>{props.children}</Suspense>
+              </main>
           </SidebarProvider>
         </MetaProvider>
       )}
