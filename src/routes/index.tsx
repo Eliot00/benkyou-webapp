@@ -1,11 +1,4 @@
-import { A, type RouteDefinition } from "@solidjs/router"
-import { getUserLoader } from "~/services/auth/client"
-
-export const route = {
-  load: async () => {
-    await getUserLoader()
-  }
-} satisfies RouteDefinition
+import { A } from "@solidjs/router"
 
 export default function HomePage() {
 
