@@ -14,13 +14,15 @@ export default function App() {
       root={props => (
         <MetaProvider>
           <Title>乐学日语</Title>
-          <SidebarProvider>
-            <AppSidebar />
+          <Suspense>
+            <SidebarProvider>
+              <AppSidebar />
               <main class="w-full h-screen">
                 <SidebarTrigger />
-                <Suspense>{props.children}</Suspense>
+                {props.children}
               </main>
-          </SidebarProvider>
+            </SidebarProvider>
+          </Suspense>
         </MetaProvider>
       )}
     >
