@@ -1,4 +1,4 @@
-import { A, createAsync } from "@solidjs/router";
+import { A, createAsync, useNavigate } from "@solidjs/router";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "~/components/ui/sidebar";
 import { Gamepad2 } from "lucide-solid"
 import { getUserLoader } from "~/services/auth/client";
@@ -6,6 +6,7 @@ import { Show } from "solid-js";
 
 export default function AppSidebar() {
   const user = createAsync(() => getUserLoader())
+  const navigate = useNavigate()
 
   return (
     <Sidebar>
@@ -37,11 +38,18 @@ export default function AppSidebar() {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton>
-              <Show when={user()} fallback={<A href="/auth/sign-in">Sign In</A>}>
-                <div>{user()?.email}</div>
+              <Show
+                when={user()}
+                fallback={
+                  <SidebarMenuButton variant="outline" onClick={() => navigate("/auth/sign-in")}>
+                    Sign In
+                  </SidebarMenuButton>
+                }
+              >
+                <SidebarMenuButton>
+                  <div>{user()?.email}</div>
+                </SidebarMenuButton>
               </Show>
-            </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
