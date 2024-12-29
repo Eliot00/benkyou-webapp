@@ -1,6 +1,6 @@
 import { A, createAsync, useNavigate } from "@solidjs/router";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "~/components/ui/sidebar";
-import { Gamepad2 } from "lucide-solid"
+import { BookOpenText, Gamepad2 } from "lucide-solid"
 import { getUserLoader } from "~/services/auth/client";
 import { Show } from "solid-js";
 
@@ -23,6 +23,14 @@ export default function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton>
+                  <A href="/learn" class="w-full flex items-center gap-2">
+                    <BookOpenText />
+                    <span>日常学习</span>
+                  </A>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton>
                   <A href="/game" class="w-full flex items-center gap-2">
