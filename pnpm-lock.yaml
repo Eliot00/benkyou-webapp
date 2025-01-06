@@ -47,6 +47,9 @@ importers:
       tailwind-merge:
         specifier: ^2.5.4
         version: 2.5.4
+      ts-fsrs:
+        specifier: ^4.5.2
+        version: 4.5.2
       unocss-preset-animations:
         specifier: ^1.1.0
         version: 1.1.0(@unocss/preset-wind@0.64.1)(unocss@0.64.1(postcss@8.4.49)(rollup@4.25.0)(vite@5.4.10(@types/node@22.9.0)(terser@5.36.0))(vue@3.5.13(typescript@5.6.3)))
@@ -3185,6 +3188,10 @@ packages:
 
   tr46@0.0.3:
     resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
+
+  ts-fsrs@4.5.2:
+    resolution: {integrity: sha512-7rVB2RxYoAyDbvH9jAoieM+BrvpnA88nZq7kTnoQ0jjkMHtoINZox4XwoIIkP6yHU9WRX4D4LFrP6YKMHdKDhw==}
+    engines: {node: '>=18.0.0'}
 
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
@@ -6633,6 +6640,8 @@ snapshots:
   totalist@3.0.1: {}
 
   tr46@0.0.3: {}
+
+  ts-fsrs@4.5.2: {}
 
   tslib@2.8.1: {}
 
