@@ -1,5 +1,7 @@
-import { createSignal, Show } from "solid-js"
+import { Show } from "solid-js"
+import { createStore } from "solid-js/store"
 import { Button } from "~/components/ui/button"
+import { createEmptyCard, FSRS, generatorParameters, Grade, Rating } from 'ts-fsrs'
 
 export type WordCardProps = {
   words: {
@@ -9,18 +11,48 @@ export type WordCardProps = {
   }[]
 }
 
+const params = generatorParameters({ enable_fuzz: true })
+const f = new FSRS(params)
+
 export function WordCard(props: WordCardProps) {
-  const [index, setIndex] = createSignal(0)
+  const [store, setStore] = createStore({
+    index: 0,
+    showAnswer: false,
+    currentCard: createEmptyCard(new Date()),
+    logs: []
+  })
+
+  const gradeCard = (grade: Grade) => {
+    const recordLog = f.repeat(store.currentCard, new Date())
+    const recordLogItem = recordLog[grade]
+    console.log(recordLogItem)
+  }
 
   return (
     <div>
-      <div>已学习：{index()}/{props.words.length}</div>
       <div lang="ja" class="my-2">
-        <div class="text-xl">{props.words[index()].display}</div>
+        <div class="text-xl">{props.words[store.index].display}</div>
       </div>
-      <Show when={index() < 9}>
-        <Button variant="outline" onClick={() => setIndex(pre => pre + 1)}>下一词</Button>
+      <Show
+        when={store.showAnswer}
+        fallback={
+          <Button
+            onClick={() => setStore("showAnswer", true)}
+          >
+            看答案
+          </Button>
+        }
+      >
+        <div>
+          {props.words[store.index].def_cn}
+        </div>
+        <div>
+          <Button onClick={() => gradeCard(Rating.Good)}>认识</Button>
+          <Button onClick={() => gradeCard(Rating.Hard)} variant="secondary">模糊</Button>
+          <Button onClick={() => gradeCard(Rating.Again)} variant="destructive">忘记了</Button>
+        </div>
       </Show>
+      <div>Debug: {JSON.stringify(store.currentCard)}</div>
     </div>
   )
 }
