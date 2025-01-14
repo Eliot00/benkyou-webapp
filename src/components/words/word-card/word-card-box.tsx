@@ -1,8 +1,8 @@
 import { Match, onMount, Switch } from "solid-js"
 import { createStore, produce } from "solid-js/store"
-import { Button } from "~/components/ui/button"
-import { FSRS, generatorParameters, Grade, Rating, State } from 'ts-fsrs'
+import { FSRS, generatorParameters, Grade, State } from 'ts-fsrs'
 import { type Card, createCardWithWord } from '~/utils/words/card'
+
 import { Flashcard } from "./flashcard"
 
 export type WordCardProps = {
