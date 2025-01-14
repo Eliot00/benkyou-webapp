@@ -1,6 +1,6 @@
 import { createResource, createSignal, Match, Show, Suspense, Switch } from "solid-js";
 import { Button } from "~/components/ui/button";
-import { WordCardBox } from "~/components/words/word-card-box";
+import { WordCardBox } from "~/components/words/word-card/word-card-box";
 import { fetchNewWordsToLearn } from "~/services/words/client";
 
 export default function WordsPage() {
