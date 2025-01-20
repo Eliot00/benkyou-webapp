@@ -7,8 +7,89 @@ export type Json =
   | Json[]
 
 export type Database = {
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          operationName?: string
+          query?: string
+          variables?: Json
+          extensions?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
   public: {
     Tables: {
+      word_learning_logs: {
+        Row: {
+          created_at: string
+          difficulty: number
+          due: string
+          elapsed_days: number
+          id: number
+          lapses: number
+          last_review: string | null
+          reps: number
+          scheduled_days: number
+          stability: number
+          state: Database["public"]["Enums"]["fsrs_card_state"]
+          user_id: string
+          word_id: string
+        }
+        Insert: {
+          created_at?: string
+          difficulty: number
+          due: string
+          elapsed_days: number
+          id?: number
+          lapses: number
+          last_review?: string | null
+          reps: number
+          scheduled_days: number
+          stability: number
+          state: Database["public"]["Enums"]["fsrs_card_state"]
+          user_id: string
+          word_id: string
+        }
+        Update: {
+          created_at?: string
+          difficulty?: number
+          due?: string
+          elapsed_days?: number
+          id?: number
+          lapses?: number
+          last_review?: string | null
+          reps?: number
+          scheduled_days?: number
+          stability?: number
+          state?: Database["public"]["Enums"]["fsrs_card_state"]
+          user_id?: string
+          word_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "word_learning_logs_word_id_fkey"
+            columns: ["word_id"]
+            isOneToOne: false
+            referencedRelation: "words"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       words: {
         Row: {
           created_at: string | null
@@ -59,7 +140,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      fsrs_card_state: "New" | "Learning" | "Review" | "Relearning"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -163,3 +244,4 @@ export type CompositeTypes<
   : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
     ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never
+
