@@ -1,8 +1,10 @@
 import { createServerClient, parseCookieHeader, serializeCookieHeader } from "@supabase/ssr"
 import { getRequestEvent } from "solid-js/web";
 
+import type { Database } from "./database.types";
+
 export function createClient() {
-  return createServerClient(
+  return createServerClient<Database>(
     import.meta.env.VITE_SUPABASE_URL,
     import.meta.env.VITE_SUPABASE_ANON_KEY,
     {

@@ -1,6 +1,6 @@
 import { createResource, createSignal, Match, Show, Suspense, Switch } from "solid-js";
 import { Button } from "~/components/ui/button";
-import { WordCard } from "~/components/words/word-card";
+import { WordCardBox } from "~/components/words/word-card/word-card-box";
 import { fetchNewWordsToLearn } from "~/services/words/client";
 
 export default function WordsPage() {
@@ -25,7 +25,7 @@ export default function WordsPage() {
             <div>Something wrong.</div>
           </Match>
           <Match when={data()}>
-            <WordCard words={data()!} />
+            <WordCardBox words={data()!} />
           </Match>
         </Switch>
       </Suspense>
