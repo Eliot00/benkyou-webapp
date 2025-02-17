@@ -85,7 +85,6 @@ export function WordCardBox(props: WordCardBoxProps) {
 
   createEffect(async () => {
     if (state.status === "summarizing") {
-      console.log("current state", state.reviewCards)
       await saveReviewData(state.reviewCards)
       setState("status", "completed")
     }

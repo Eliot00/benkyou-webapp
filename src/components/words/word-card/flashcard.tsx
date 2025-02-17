@@ -10,25 +10,43 @@ type FlashcardProps = {
 
 export function Flashcard(props: FlashcardProps) {
   const [showAnswer, setShowAnswer] = createSignal(false)
+  const [grade, setGrade] = createSignal<Grade | null>(null)
+
+  const onGrade = (grade: Grade) => {
+    setGrade(grade)
+    setShowAnswer(true)
+  }
 
   return (
     <div>
+      <div lang="ja">{props.question}</div>
       <Show
         when={showAnswer()}
-        fallback={
-          <>
-            <div lang="ja">{props.question}</div>
-            <Button onClick={() => setShowAnswer(true)}>看答案</Button>
-          </>
-        }
       >
         <div>{props.answer}</div>
-        <div>
-          <Button onClick={() => props.onGrade(Rating.Good)}>认识</Button>
-          <Button onClick={() => props.onGrade(Rating.Hard)} variant="secondary">模糊</Button>
-          <Button onClick={() => props.onGrade(Rating.Again)} variant="destructive">忘记了</Button>
-        </div>
       </Show>
+      <div>
+        <Show
+          when={grade()}
+          fallback={
+            <div>
+              <Button onClick={() => onGrade(Rating.Good)}>认识</Button>
+              <Button onClick={() => onGrade(Rating.Hard)} variant="secondary">模糊</Button>
+              <Button onClick={() => onGrade(Rating.Again)} variant="destructive">忘记了</Button>
+            </div>
+          }
+        >
+          <Button
+            onClick={() => {
+              setShowAnswer(false)
+              props.onGrade(grade()!)
+              setGrade(null)
+            }}
+          >
+            下一词
+          </Button>
+        </Show>
+      </div>
     </div>
   )
 }
