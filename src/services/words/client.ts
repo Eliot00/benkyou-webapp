@@ -1,21 +1,35 @@
-import { createClient } from "~/libs/supabase/client";
+import {
+  getLearningPreview as getLearningPreviewServerAction,
+  getNewWordsToLearn as getNewWordsToLearnServerAction,
+  getReviewCardsToLearn as getReviewCardsToLearnServerAction,
+} from "./server"
+import { query } from "@solidjs/router";
+import { createEmptyCard } from 'ts-fsrs'
 
-export async function fetchNewWordsToLearn(scope?: string) {
-  if (!scope) {
-    return null
-  }
+export const getLearningPreview = query(
+  getLearningPreviewServerAction,
+  "getLearningPreview"
+)
 
-  const supabase = createClient()
-  const { data, error, status } = await supabase
-  .from("words")
-  .select("id, display, def_cn")
-  .contains("tags", [scope])
-  .order("seq", { ascending: true })
-  .limit(10);
+export const getNewCardsToLearn = query(
+  async () => {
+    const words = await getNewWordsToLearnServerAction()
+    const maxSeq = words.reduce(
+      (pre, cur) => pre > cur.seq ? pre : cur.seq,
+      -1
+    )
 
-  if (error && status !== 406) {
-    throw error
-  }
+    const wordCards = words.map(word => ({
+      word,
+      card: createEmptyCard(),
+    }))
 
-  return data
-}
+    return { wordCards, maxSeq }
+  },
+  "getNewCardsToLearn"
+)
+
+export const getReviewCardsToLearn = query(
+  getReviewCardsToLearnServerAction,
+  "getReviewCardsToLearn"
+)

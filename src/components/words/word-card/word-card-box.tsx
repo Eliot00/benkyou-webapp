@@ -1,19 +1,18 @@
-import { createEffect, Match, onMount, Switch } from "solid-js"
+import { Match, onMount, Switch } from "solid-js"
 import { createStore, produce } from "solid-js/store"
 import {
   FSRS,
   generatorParameters,
   Grade,
   State,
-  createEmptyCard
 } from 'ts-fsrs'
-import { type Word, type WordCard } from '~/utils/words/card'
-import { saveReviewData } from "~/services/words/server"
-
+import type { WordCard, InitialWordCard } from '~/utils/words/card'
+import { LoadingButton } from "~/components/async-button"
 import { Flashcard } from "./flashcard"
 
 export type WordCardBoxProps = {
-  words: Word[]
+  cards: InitialWordCard[]
+  onComplete: (cards: WordCard[]) => Promise<void>
 }
 
 type WordCardBoxUiState = {
@@ -21,8 +20,6 @@ type WordCardBoxUiState = {
   learningCards: InitialWordCard[]
   reviewCards: WordCard[]
 }
-
-type InitialWordCard = Omit<WordCard, "reviewLog">
 
 const params = generatorParameters({ enable_fuzz: true })
 const f = new FSRS(params)
@@ -35,20 +32,15 @@ export function WordCardBox(props: WordCardBoxProps) {
   })
 
   onMount(() => {
-    if (!props.words.length) {
+    if (!props.cards.length) {
       setState("status", "idle")
       return
     }
 
-    const wordCards: InitialWordCard[] = props.words.map(word => ({
-      word,
-      card: createEmptyCard(),
-    }))
-
     setState(
       produce((state) => {
         state.status = "learning",
-        state.learningCards = wordCards
+        state.learningCards = [...props.cards]
       })
     )
   })
@@ -72,7 +64,7 @@ export function WordCardBox(props: WordCardBoxProps) {
       produce(state => {
         state.learningCards.shift()
         if (newWordCard.card.state === State.Review) {
-          if (state.learningCards.length === 1) {
+          if (state.learningCards.length === 0) {
             state.status = "summarizing"
           }
           state.reviewCards.push(newWordCard)
@@ -82,13 +74,6 @@ export function WordCardBox(props: WordCardBoxProps) {
       })
     )
   }
-
-  createEffect(async () => {
-    if (state.status === "summarizing") {
-      await saveReviewData(state.reviewCards)
-      setState("status", "completed")
-    }
-  })
 
   return (
     <div>
@@ -104,7 +89,14 @@ export function WordCardBox(props: WordCardBoxProps) {
           />
         </Match>
         <Match when={state.status === 'summarizing'}>
-          <div>正在统计学习进度</div>
+          <LoadingButton
+            onClick={async () => {
+              await props.onComplete(state.reviewCards)
+              setState("status", "completed")
+            }}
+          >
+            完成学习
+          </LoadingButton>
         </Match>
         <Match when={state.status === 'completed'}>
           <div>已完成</div>

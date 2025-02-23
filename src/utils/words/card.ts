@@ -6,6 +6,8 @@ export type WordCard = {
   reviewLog: ReviewLog
 }
 
+export type InitialWordCard = Omit<WordCard, "reviewLog">
+
 export type Word = {
   id: string
   display: string

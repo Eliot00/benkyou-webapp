@@ -34,6 +34,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      learning_profiles: {
+        Row: {
+          id: string
+          last_word_seq: number
+          updated_at: string | null
+        }
+        Insert: {
+          id: string
+          last_word_seq?: number
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          last_word_seq?: number
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       word_learning_logs: {
         Row: {
           created_at: string
