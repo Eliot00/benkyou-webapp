@@ -1,15 +1,20 @@
 import { A, createAsync, useNavigate } from "@solidjs/router";
-import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "~/components/ui/sidebar";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "~/components/ui/sidebar";
 import { BookOpenText, Gamepad2 } from "lucide-solid"
 import { getUserLoader } from "~/services/auth/client";
 import { Show } from "solid-js";
+import { Collapsible, CollapsibleTrigger } from "./ui/collapsible";
+import type {
+  CollapsibleRootProps,
+  CollapsibleTriggerProps,
+} from "@kobalte/core/collapsible"
 
 export default function AppSidebar() {
   const user = createAsync(() => getUserLoader())
   const navigate = useNavigate()
 
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -21,43 +26,67 @@ export default function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton>
-                  <A href="/learn" class="w-full flex items-center gap-2">
-                    <BookOpenText />
-                    <span>日常学习</span>
+          <SidebarMenu>
+            <Collapsible
+              defaultOpen
+              as={(props: CollapsibleRootProps) => (
+                <SidebarMenuItem {...props}>
+                  <A href="/learn">
+                    <CollapsibleTrigger
+                      as={(props: CollapsibleTriggerProps) => (
+                        // @ts-expect-error
+                        <SidebarMenuButton
+                          {...props}
+                          tooltip="日常学习"
+                        >
+                          <BookOpenText />
+                          <span>日常学习</span>
+                        </SidebarMenuButton>
+                      )}
+                    />
                   </A>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton>
-                  <A href="/game" class="w-full flex items-center gap-2">
-                    <Gamepad2 />
-                    <span>趣味游戏</span>
+                </SidebarMenuItem>
+              )}
+            />
+            <Collapsible
+              defaultOpen
+              as={(props: CollapsibleRootProps) => (
+                <SidebarMenuItem {...props}>
+                  <A href="/game">
+                    <CollapsibleTrigger
+                      as={(props: CollapsibleTriggerProps) => (
+                        // @ts-expect-error
+                        <SidebarMenuButton
+                          {...props}
+                          tooltip="趣味游戏"
+                        >
+                          <Gamepad2 />
+                          <span>趣味游戏</span>
+                        </SidebarMenuButton>
+                      )}
+                    />
                   </A>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
+                </SidebarMenuItem>
+              )}
+            />
+          </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-              <Show
-                when={user()}
-                fallback={
-                  <SidebarMenuButton variant="outline" onClick={() => navigate("/auth/sign-in")}>
-                    Sign In
-                  </SidebarMenuButton>
-                }
-              >
-                <SidebarMenuButton>
-                  <div>{user()?.email}</div>
+            <Show
+              when={user()}
+              fallback={
+                <SidebarMenuButton variant="outline" onClick={() => navigate("/auth/sign-in")}>
+                  Sign In
                 </SidebarMenuButton>
-              </Show>
+              }
+            >
+              <SidebarMenuButton>
+                <div>{user()?.email}</div>
+              </SidebarMenuButton>
+            </Show>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
