@@ -33,6 +33,6 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20241106.0",
     "unocss": "^0.64.1",
-    "wrangler": "^3.86.0"
+    "wrangler": "^3.112.0"
   }
 }
