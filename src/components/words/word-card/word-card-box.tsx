@@ -1,5 +1,6 @@
-import { Match, onMount, Switch } from "solid-js"
+import { createEffect, Match, Switch } from "solid-js"
 import { createStore, produce } from "solid-js/store"
+import { Skeleton } from "~/components/ui/skeleton"
 import {
   FSRS,
   generatorParameters,
@@ -8,10 +9,12 @@ import {
 } from 'ts-fsrs'
 import type { WordCard, InitialWordCard } from '~/utils/words/card'
 import { LoadingButton } from "~/components/async-button"
+import { Card, CardContent, CardHeader, CardFooter } from "~/components/ui/card"
 import { Flashcard } from "./flashcard"
+import { A } from "@solidjs/router"
 
 export type WordCardBoxProps = {
-  cards: InitialWordCard[]
+  cards?: InitialWordCard[]
   onComplete: (cards: WordCard[]) => Promise<void>
 }
 
@@ -31,18 +34,16 @@ export function WordCardBox(props: WordCardBoxProps) {
     reviewCards: []
   })
 
-  onMount(() => {
-    if (!props.cards.length) {
-      setState("status", "idle")
-      return
+  createEffect(() => {
+    if (props.cards){
+      const cards = props.cards
+      if (cards.length && state.status === 'loading') {
+        setState(produce((state) => {
+          state.status = "learning",
+          state.learningCards = [...cards]
+        }))
+      }
     }
-
-    setState(
-      produce((state) => {
-        state.status = "learning",
-        state.learningCards = [...props.cards]
-      })
-    )
   })
 
   const gradeCard = (grade: Grade) => {
@@ -76,10 +77,20 @@ export function WordCardBox(props: WordCardBoxProps) {
   }
 
   return (
-    <div>
+    <Card class="w-80 h-140 p-2 flex flex-col justify-between">
       <Switch>
         <Match when={state.status === 'loading'}>
-          <div>加载中</div>
+          <CardHeader>
+            <Skeleton class="w-20 h-4" />
+          </CardHeader>
+          <CardContent>
+            <Skeleton class="w-60 h-50" />
+          </CardContent>
+          <CardFooter class="flex items-center">
+            <Skeleton class="w-18 h-8" />
+            <Skeleton class="w-18 h-8" />
+            <Skeleton class="w-18 h-8" />
+          </CardFooter>
         </Match>
         <Match when={state.status === 'learning'}>
           <Flashcard
@@ -90,6 +101,7 @@ export function WordCardBox(props: WordCardBoxProps) {
         </Match>
         <Match when={state.status === 'summarizing'}>
           <LoadingButton
+            class="my-auto"
             onClick={async () => {
               await props.onComplete(state.reviewCards)
               setState("status", "completed")
@@ -99,12 +111,15 @@ export function WordCardBox(props: WordCardBoxProps) {
           </LoadingButton>
         </Match>
         <Match when={state.status === 'completed'}>
-          <div>已完成</div>
+          <div class="m-auto">
+            已完成，
+            <A href="/learn/words" class="text-primary underline-offset-4 hover:underline">回到单词主页</A>
+          </div>
         </Match>
         <Match when={state.status === 'idle'}>
           <div>没有新的学习任务</div>
         </Match>
       </Switch>
-    </div>
+    </Card>
   )
 }

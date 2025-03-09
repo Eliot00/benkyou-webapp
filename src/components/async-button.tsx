@@ -2,6 +2,7 @@ import { createSignal, Show, type ParentProps } from "solid-js"
 import { Button } from "~/components/ui/button"
 
 type LoadingButtonProps = ParentProps<{
+  class?: string
   onClick: () => Promise<void>
 }>
 
@@ -10,6 +11,7 @@ export function LoadingButton(props: LoadingButtonProps) {
 
   return (
     <Button
+      class={props.class}
       onClick={async () => {
         setLoading(true)
         await props.onClick()

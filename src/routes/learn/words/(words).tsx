@@ -6,9 +6,9 @@ export default function WordsPage() {
   const preview = createAsync(() => getLearningPreview())
 
   return (
-    <div class="w-full flex gap-2 p-2">
+    <div class="w-full h-full flex items-center justify-center">
       <A href="/learn/words/new">
-        <div>
+        <div class="p-2 rounded-md bg-outline">
           新学
           <Suspense fallback={<span>0</span>}>
             <span>

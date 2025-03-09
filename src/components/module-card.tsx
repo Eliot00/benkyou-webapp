@@ -9,7 +9,9 @@ export type ModuleCardProps = {
 export function ModuleCard(props: ModuleCardProps) {
   return (
     <A
-      href={props.href} class="block p-6 bg-white text-center rounded-lg shadow-md transition-transform transform hover:scale-105 hover:shadow-lg">
+      href={props.href}
+      class="block p-6 bg-white text-center rounded-lg shadow-sm hover:shadow-md"
+    >
       <h3 class="text-xl font-semibold text-gray-800">{props.title}</h3>
       <p class="mt-2 text-gray-600">{props.description}</p>
     </A>
