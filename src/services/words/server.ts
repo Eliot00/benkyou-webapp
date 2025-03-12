@@ -114,6 +114,8 @@ export async function getReviewCardsToLearn(): Promise<InitialWordCard[]> {
     `)
     .lte("due", todayEndISO)
     .eq("user_id", user.id)
+    .order("due", { ascending: true })
+    .limit(10)
 
   if (error && status !== 406) {
     throw error
