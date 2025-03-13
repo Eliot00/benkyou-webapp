@@ -30,8 +30,16 @@ export function Flashcard(props: FlashcardProps) {
   return (
     <>
       <div lang="ja" class="font-bold text-lg">{props.word.display}</div>
-      <div class="grow">
-        <div>
+      <div class="grow space-y-2">
+        <div class="flex items-center gap-2">
+          <Show
+            when={showAnswer()}
+            fallback={<Skeleton class="w-20 h-8" />}
+          >
+            <span lang="ja">
+              {props.word.kana}
+            </span>
+          </Show>
           <Show when={props.word.audio}>
             <button
               on:click={() => {

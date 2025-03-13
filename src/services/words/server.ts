@@ -68,7 +68,7 @@ export async function getNewWordsToLearn() {
 
   const { data, error, status } = await supabase
     .from("words")
-    .select("id,display,def_cn,audio,seq")
+    .select("id,display,def_cn,kana,audio,seq")
     .gt("seq", learningProfile.last_word_seq)
     .order("seq", { ascending: true })
     .limit(10)
@@ -110,6 +110,7 @@ export async function getReviewCardsToLearn(): Promise<InitialWordCard[]> {
          id,
          display,
          def_cn,
+         kana,
          audio
        )
     `)

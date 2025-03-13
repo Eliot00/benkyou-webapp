@@ -12,5 +12,6 @@ export type Word = {
   id: string
   display: string
   def_cn: string
+  kana: string
   audio: string | null
 }
