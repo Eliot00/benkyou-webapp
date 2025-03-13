@@ -94,8 +94,7 @@ export function WordCardBox(props: WordCardBoxProps) {
         </Match>
         <Match when={state.status === 'learning'}>
           <Flashcard
-            question={state.learningCards[0].word.display}
-            answer={state.learningCards[0].word.def_cn}
+            word={state.learningCards[0].word}
             onGrade={gradeCard}
           />
         </Match>

@@ -110,6 +110,7 @@ export type Database = {
       }
       words: {
         Row: {
+          audio: string | null
           created_at: string | null
           def_cn: string
           display: string
@@ -123,6 +124,7 @@ export type Database = {
           updated_at: string | null
         }
         Insert: {
+          audio?: string | null
           created_at?: string | null
           def_cn: string
           display: string
@@ -136,6 +138,7 @@ export type Database = {
           updated_at?: string | null
         }
         Update: {
+          audio?: string | null
           created_at?: string | null
           def_cn?: string
           display?: string
