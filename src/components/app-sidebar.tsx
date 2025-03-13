@@ -1,7 +1,7 @@
 import { A, createAsync } from "@solidjs/router";
 import { NotebookPen, Gamepad2 } from "lucide-solid"
 import { getUserLoader } from "~/services/auth/client";
-import { Suspense, type ParentProps } from "solid-js";
+import { Show, type ParentProps } from "solid-js";
 
 export default function AppSidebar() {
   const user = createAsync(() => getUserLoader())
@@ -24,11 +24,13 @@ export default function AppSidebar() {
         </SidebarMenuItem>
       </nav>
       <footer class="p-2">
-        <Suspense fallback={<A href="/auth/sign-in">Sign In</A>}>
+        <Show
+          when={user()}
+          fallback={<SidebarMenuItem href="/auth/sign-in">Sign In</SidebarMenuItem>}>
           <span>
-            {user()?.email}
+            {user()?.email?.slice(0, 6)}
           </span>
-        </Suspense>
+        </Show>
       </footer>
     </div>
   )
