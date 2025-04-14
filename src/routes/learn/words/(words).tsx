@@ -6,10 +6,10 @@ export default function WordsPage() {
   const preview = createAsync(() => getLearningPreview())
 
   return (
-    <div class="w-full h-full flex items-center justify-center">
+    <div class="w-full h-full flex items-center justify-center gap-6">
       <A href="/learn/words/new">
-        <div class="p-2 rounded-md bg-outline">
-          新学
+        <div class="hover:underline">
+          👉新学
           <Suspense fallback={<span>0</span>}>
             <span>
               {preview()?.newWordsCount}
@@ -18,8 +18,8 @@ export default function WordsPage() {
         </div>
       </A>
       <A href="/learn/words/review">
-        <div>
-          复习
+        <div class="hover:underline">
+          👉复习
           <Suspense fallback={<span>0</span>}>
             <span>
               {preview()?.reviewWordsCount}
