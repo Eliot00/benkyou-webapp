@@ -1,10 +1,15 @@
-import { A, createAsync } from "@solidjs/router";
-import { NotebookPen, Gamepad2 } from "lucide-solid"
+import { A, createAsync, useNavigate } from "@solidjs/router";
+import { NotebookPen, Gamepad2, LogOut } from "lucide-solid"
 import { getUserLoader } from "~/services/auth/client";
 import { Show, type ParentProps } from "solid-js";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "~/components/ui/dropdown-menu";
+import { Button } from "~/components/ui/button";
+import type { DropdownMenuSubTriggerProps } from "@kobalte/core/dropdown-menu";
+import { createClient } from "~/libs/supabase/client";
 
 export default function AppSidebar() {
   const user = createAsync(() => getUserLoader())
+  const navigate = useNavigate()
 
   return (
     <div
@@ -27,9 +32,27 @@ export default function AppSidebar() {
         <Show
           when={user()}
           fallback={<SidebarMenuItem href="/auth/sign-in">Sign In</SidebarMenuItem>}>
-          <span>
-            {user()?.email?.slice(0, 6)}
-          </span>
+          <DropdownMenu placement="top-end">
+            <DropdownMenuTrigger
+              as={(props: DropdownMenuSubTriggerProps) => (
+                <Button variant="outline" class="w-full" {...props}>
+                  {user()?.email?.slice(0, 6)}
+                </Button>
+              )}
+            />
+            <DropdownMenuContent class="w-56">
+              <DropdownMenuItem
+                onClick={async () => {
+                  const supabase = createClient()
+                  await supabase.auth.signOut()
+                  navigate("/auth/sign-in")
+                }}
+              >
+                <LogOut />
+                <span class="ml-2">Sign out</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </Show>
       </footer>
     </div>
