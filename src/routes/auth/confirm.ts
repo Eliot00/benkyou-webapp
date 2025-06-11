@@ -9,14 +9,17 @@ import { createClient } from "~/libs/supabase/server";
 export async function GET(event: APIEvent) {
   const url = new URL(event.request.url)
   const searchParams = url.searchParams
-  const code = searchParams.get("code")
-  const next = searchParams.get("next") ?? "/"
+  const token_hash = searchParams.get("token_hash")
+  const type = searchParams.get("type")
 
-  if (code) {
+  if (token_hash && type === 'email') {
     const supabase = createClient()
-    const { error } = await supabase.auth.exchangeCodeForSession(code)
+    const { error } = await supabase.auth.verifyOtp({
+      token_hash,
+      type
+    })
     if (!error) {
-      return Response.redirect(`${import.meta.env.VITE_SITE_URL}/${next.slice(1)}`, 303)
+      return Response.redirect('/', 303)
     }
   }
 
