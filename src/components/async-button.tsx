@@ -1,25 +1,50 @@
-import { createSignal, Show, type ParentProps } from "solid-js"
-import { Button } from "~/components/ui/button"
+/**
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ * SPDX-FileCopyrightText: Copyright 2025 Benkyou Project
+ */
+
+import { createSignal, Show, type ParentProps } from "solid-js";
+import { Button } from "~/components/ui/button";
+
+type BasicButtonProps = ParentProps<{
+  class?: string;
+  onClick: () => Promise<void>;
+}>;
+
+export function AutoLoadingButton(props: BasicButtonProps) {
+  const [loading, setLoading] = createSignal(false);
+
+  return (
+    <LoadingButton
+      class={props.class}
+      loading={loading()}
+      onClick={async () => {
+        setLoading(true);
+        await props.onClick();
+        setLoading(false);
+      }}
+    >
+      {props.children}
+    </LoadingButton>
+  );
+}
 
 type LoadingButtonProps = ParentProps<{
-  class?: string
-  onClick: () => Promise<void>
-}>
+  loading?: boolean;
+  type?: HTMLButtonElement["type"];
+  class?: string;
+  onClick?: () => void;
+}>;
 
 export function LoadingButton(props: LoadingButtonProps) {
-  const [loading, setLoading] = createSignal(false)
-
   return (
     <Button
       class={props.class}
-      onClick={async () => {
-        setLoading(true)
-        await props.onClick()
-        setLoading(false)
-      }}
-      disabled={loading()}
+      onClick={props.onClick}
+      type={props.type}
+      disabled={props.loading}
     >
-      <Show when={loading()}>
+      <Show when={props.loading}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -37,5 +62,5 @@ export function LoadingButton(props: LoadingButtonProps) {
       </Show>
       {props.children}
     </Button>
-  )
+  );
 }
