@@ -90,3 +90,7 @@ body {
 button {
   @apply bg-transparent;
 }
+
+:lang(ja) {
+  font-family: "M PLUS Rounded 1c", sans-serif;
+}
