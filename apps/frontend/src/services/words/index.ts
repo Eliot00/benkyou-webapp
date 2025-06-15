@@ -1,0 +1,110 @@
+/**
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ * SPDX-FileCopyrightText: Copyright 2025 Benkyou Project
+ */
+
+import { query } from "@solidjs/router";
+import { createEmptyCard, type Card } from 'ts-fsrs'
+import type { WordCard } from "~/utils/words/card";
+
+type Preview = {
+  new: number
+  review: number
+}
+
+export const getLearningPreview = query(
+  async () => {
+    const res = await fetch('/api/words/preview', { credentials: 'include' })
+    const result: Preview = await res.json()
+    return result
+  },
+  "getLearningPreview"
+)
+
+type NewWord = {
+  id: string
+  display: string
+  defCn: string
+  kana: string
+  audio: string | null
+  seq: number
+}
+export const getNewCardsToLearn = query(
+  async () => {
+    const wordsRes = await fetch('/api/words/new', { credentials: 'include' })
+    const words: NewWord[] = await wordsRes.json()
+    const maxSeq = words.reduce(
+      (pre, cur) => pre > cur.seq ? pre : cur.seq,
+      -1
+    )
+
+    const wordCards = words.map(word => ({
+      word,
+      card: createEmptyCard(),
+    }))
+
+    return { wordCards, maxSeq }
+  },
+  "getNewCardsToLearn"
+)
+
+const FSRS_STATE = ["New", "Learning", "Review", "Relearning"] as const
+
+type LearningRecord = {
+  due: string
+  stability: number
+  difficulty: number
+  elapsedDays: number
+  scheduledDays: number
+  reps: number
+  lapses: number
+  state: (typeof FSRS_STATE)[number]
+  lastReview: string | null,
+  word: NewWord
+}
+
+export const getReviewCardsToLearn = query(
+  async () => {
+    const res = await fetch('/api/words/review', { credentials: 'include' })
+    const records: LearningRecord[] = await res.json()
+    return records.map(record => {
+      const { word, due, state, lastReview, elapsedDays, scheduledDays, ...rest } = record
+      return {
+        word: word,
+        card: {
+          due: new Date(due),
+          state: FSRS_STATE.indexOf(state),
+          last_review: lastReview ? new Date(lastReview) : undefined,
+          elapsed_days: elapsedDays,
+          scheduled_days: scheduledDays,
+          ...rest,
+        }
+      }
+    })
+  },
+  "getReviewCardsToLearn"
+)
+
+export async function saveReviewData(wordCards: WordCard[], lastSeq: number | null = null) {
+  const reviewLogs = wordCards.map(wordCard => ({
+    wordId: wordCard.word.id,
+    ...fsrsCardToDbData(wordCard.card),
+  }))
+
+  await fetch('/api/words/review', {
+    method: 'POST',
+    credentials: 'include',
+    body: JSON.stringify({ reviewLogs, lastSeq }),
+  })
+}
+
+function fsrsCardToDbData(card: Card) {
+  return {
+    ...card,
+    elapsedDays: card.elapsed_days,
+    scheduledDays: card.scheduled_days,
+    due: card.due.toISOString(),
+    lastReview: card.last_review?.toISOString(),
+    state: FSRS_STATE[card.state]
+  }
+}
