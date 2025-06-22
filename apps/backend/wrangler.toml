@@ -8,3 +8,6 @@ main = "src/index.ts"
 binding = "HYPERDRIVE"
 id = "5c3cbe6054ec4114bb08228c9463424b"
 localConnectionString = "postgresql://postgres:postgres@127.0.0.1:54322/postgres"
+
+[env.production.vars]
+BETTER_AUTH_URL = "https://app.benkyou.fun"
