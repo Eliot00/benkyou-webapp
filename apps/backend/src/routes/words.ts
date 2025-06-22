@@ -46,7 +46,7 @@ app.get("/new", async (c) => {
         .from(users)
         .where(eq(users.id, currentUser.id))
     ),
-    orderBy: [asc(words.id)],
+    orderBy: [asc(words.seq)],
     limit: 10,
   })
 
