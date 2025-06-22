@@ -1,0 +1,10 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "benkyou-server"
+compatibility_date = "2025-06-06"
+compatibility_flags = ["nodejs_compat"]
+main = "src/index.ts"
+
+[[hyperdrive]]
+binding = "HYPERDRIVE"
+id = "5c3cbe6054ec4114bb08228c9463424b"
+localConnectionString = "postgresql://postgres:postgres@127.0.0.1:54322/postgres"
