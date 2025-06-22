@@ -7,11 +7,12 @@ import { useSession, signOut } from "~/libs/better-auth"
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "~/components/ui/dropdown-menu";
 import { Button } from "~/components/ui/button";
 import type { DropdownMenuSubTriggerProps } from "@kobalte/core/dropdown-menu";
-import { Show, Suspense } from "solid-js";
+import { useNavigate } from "@solidjs/router";
+import { Suspense, Switch, Match } from "solid-js";
 import { LogOut } from "lucide-solid"
 
 import { SidebarMenuItem } from './menu-item'
-import { useNavigate } from "@solidjs/router";
+import { Skeleton } from "~/components/ui/skeleton";
 
 export function UserAvatar() {
   const session = useSession()
@@ -19,10 +20,19 @@ export function UserAvatar() {
 
   return (
     <Suspense>
-        <Show
-          when={session().data}
-          fallback={<SidebarMenuItem href="/auth/sign-in">Sign In</SidebarMenuItem>}
-        >
+      <Switch
+        fallback={<SidebarMenuItem href="/auth/sign-in">Sign In</SidebarMenuItem>}
+      >
+        <Match when={session().isPending || session().isRefetching}>
+          <div class="flex items-center gap-4">
+            <Skeleton class="h-12 w-12 rounded-full" />
+            <div class="space-y-2">
+              <Skeleton class="h-4 w-28" />
+              <Skeleton class="h-4 w-20" />
+            </div>
+          </div>
+        </Match>
+        <Match when={session().data}>
           <DropdownMenu placement="top-end">
             <DropdownMenuTrigger
               as={(props: DropdownMenuSubTriggerProps) => (
@@ -48,7 +58,8 @@ export function UserAvatar() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        </Show>
-      </Suspense>
+        </Match>
+      </Switch>
+    </Suspense>
   )
 }
