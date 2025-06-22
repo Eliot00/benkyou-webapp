@@ -3,16 +3,16 @@
  * SPDX-FileCopyrightText: Copyright 2025 Benkyou Project
  */
 
-import { useSession, signOut } from "~/libs/better-auth"
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "~/components/ui/dropdown-menu";
-import { Button } from "~/components/ui/button";
-import type { DropdownMenuSubTriggerProps } from "@kobalte/core/dropdown-menu";
-import { useNavigate } from "@solidjs/router";
-import { Suspense, Switch, Match } from "solid-js";
-import { LogOut } from "lucide-solid"
+import type { DropdownMenuSubTriggerProps } from '@kobalte/core/dropdown-menu'
+import { useNavigate } from '@solidjs/router'
+import { LogOut } from 'lucide-solid'
+import { Match, Suspense, Switch } from 'solid-js'
+import { Button } from '~/components/ui/button'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '~/components/ui/dropdown-menu'
+import { Skeleton } from '~/components/ui/skeleton'
 
+import { signOut, useSession } from '~/libs/better-auth'
 import { SidebarMenuItem } from './menu-item'
-import { Skeleton } from "~/components/ui/skeleton";
 
 export function UserAvatar() {
   const session = useSession()
@@ -47,9 +47,9 @@ export function UserAvatar() {
                   await signOut({
                     fetchOptions: {
                       onSuccess: () => {
-                        navigate("/auth/sign-in")
-                      }
-                    }
+                        navigate('/auth/sign-in')
+                      },
+                    },
                   })
                 }}
               >

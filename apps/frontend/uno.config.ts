@@ -3,8 +3,8 @@ import {
   presetUno,
   transformerDirectives,
   transformerVariantGroup,
-} from "unocss";
-import presetAnimations from "unocss-preset-animations";
+} from 'unocss'
+import presetAnimations from 'unocss-preset-animations'
 
 export default defineConfig({
   presets: [
@@ -13,95 +13,95 @@ export default defineConfig({
         dark: '[data-kb-theme="dark"]',
         light: '[data-kb-theme="light"]',
       },
-      prefix: "",
+      prefix: '',
     }),
     presetAnimations(),
   ],
   transformers: [transformerVariantGroup(), transformerDirectives()],
   theme: {
     colors: {
-      border: "hsl(var(--border))",
-      input: "hsl(var(--input))",
-      ring: "hsl(var(--ring))",
-      background: "hsl(var(--background))",
-      foreground: "hsl(var(--foreground))",
+      border: 'hsl(var(--border))',
+      input: 'hsl(var(--input))',
+      ring: 'hsl(var(--ring))',
+      background: 'hsl(var(--background))',
+      foreground: 'hsl(var(--foreground))',
       primary: {
-        DEFAULT: "hsl(var(--primary))",
-        foreground: "hsl(var(--primary-foreground))",
+        DEFAULT: 'hsl(var(--primary))',
+        foreground: 'hsl(var(--primary-foreground))',
       },
       secondary: {
-        DEFAULT: "hsl(var(--secondary))",
-        foreground: "hsl(var(--secondary-foreground))",
+        DEFAULT: 'hsl(var(--secondary))',
+        foreground: 'hsl(var(--secondary-foreground))',
       },
       destructive: {
-        DEFAULT: "hsl(var(--destructive))",
-        foreground: "hsl(var(--destructive-foreground))",
+        DEFAULT: 'hsl(var(--destructive))',
+        foreground: 'hsl(var(--destructive-foreground))',
       },
       muted: {
-        DEFAULT: "hsl(var(--muted))",
-        foreground: "hsl(var(--muted-foreground))",
+        DEFAULT: 'hsl(var(--muted))',
+        foreground: 'hsl(var(--muted-foreground))',
       },
       accent: {
-        DEFAULT: "hsl(var(--accent))",
-        foreground: "hsl(var(--accent-foreground))",
+        DEFAULT: 'hsl(var(--accent))',
+        foreground: 'hsl(var(--accent-foreground))',
       },
       popover: {
-        DEFAULT: "hsl(var(--popover))",
-        foreground: "hsl(var(--popover-foreground))",
+        DEFAULT: 'hsl(var(--popover))',
+        foreground: 'hsl(var(--popover-foreground))',
       },
       card: {
-        DEFAULT: "hsl(var(--card))",
-        foreground: "hsl(var(--card-foreground))",
+        DEFAULT: 'hsl(var(--card))',
+        foreground: 'hsl(var(--card-foreground))',
       },
       sidebar: {
-        DEFAULT: "hsl(var(--sidebar-background))",
-        foreground: "hsl(var(--sidebar-foreground))",
+        DEFAULT: 'hsl(var(--sidebar-background))',
+        foreground: 'hsl(var(--sidebar-foreground))',
         primary: {
-          DEFAULT: "hsl(var(--sidebar-primary))",
-          foreground: "hsl(var(--sidebar-primary-foreground))",
+          DEFAULT: 'hsl(var(--sidebar-primary))',
+          foreground: 'hsl(var(--sidebar-primary-foreground))',
         },
         accent: {
-          DEFAULT: "hsl(var(--sidebar-accent))",
-          foreground: "hsl(var(--sidebar-accent-foreground))",
+          DEFAULT: 'hsl(var(--sidebar-accent))',
+          foreground: 'hsl(var(--sidebar-accent-foreground))',
         },
-        border: "hsl(var(--sidebar-border))",
-        ring: "hsl(var(--sidebar-ring))",
+        border: 'hsl(var(--sidebar-border))',
+        ring: 'hsl(var(--sidebar-ring))',
       },
     },
     borderRadius: {
-      lg: "var(--radius)",
-      md: "calc(var(--radius) - 2px)",
-      sm: "calc(var(--radius) - 4px)",
+      lg: 'var(--radius)',
+      md: 'calc(var(--radius) - 2px)',
+      sm: 'calc(var(--radius) - 4px)',
     },
     animation: {
       keyframes: {
-        "accordion-down":
-          "{ from { height: 0 } to { height: var(--kb-accordion-content-height) } }",
-        "accordion-up":
-          "{ from { height: var(--kb-accordion-content-height) } to { height: 0 } }",
-        "collapsible-down":
-          "{ from { height: 0 } to { height: var(--kb-collapsible-content-height) } }",
-        "collapsible-up":
-          "{ from { height: var(--kb-collapsible-content-height) } to { height: 0 } }",
-        "caret-blink": "{ 0%,70%,100% { opacity: 1 } 20%,50% { opacity: 0 } }"
+        'accordion-down':
+          '{ from { height: 0 } to { height: var(--kb-accordion-content-height) } }',
+        'accordion-up':
+          '{ from { height: var(--kb-accordion-content-height) } to { height: 0 } }',
+        'collapsible-down':
+          '{ from { height: 0 } to { height: var(--kb-collapsible-content-height) } }',
+        'collapsible-up':
+          '{ from { height: var(--kb-collapsible-content-height) } to { height: 0 } }',
+        'caret-blink': '{ 0%,70%,100% { opacity: 1 } 20%,50% { opacity: 0 } }',
       },
       timingFns: {
-        "accordion-down": "ease-out",
-        "accordion-up": "ease-out",
-        "collapsible-down": "ease-out",
-        "collapsible-up": "ease-out",
-        "caret-blink": "ease-out"
+        'accordion-down': 'ease-out',
+        'accordion-up': 'ease-out',
+        'collapsible-down': 'ease-out',
+        'collapsible-up': 'ease-out',
+        'caret-blink': 'ease-out',
       },
       durations: {
-        "accordion-down": "0.2s",
-        "accordion-up": "0.2s",
-        "collapsible-down": "0.2s",
-        "collapsible-up": "0.2s",
-        "caret-blink": "1.25s"
+        'accordion-down': '0.2s',
+        'accordion-up': '0.2s',
+        'collapsible-down': '0.2s',
+        'collapsible-up': '0.2s',
+        'caret-blink': '1.25s',
       },
       counts: {
-        "caret-blink": "infinite"
-      }
+        'caret-blink': 'infinite',
+      },
     },
   },
-});
+})

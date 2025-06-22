@@ -3,9 +3,10 @@
  * SPDX-FileCopyrightText: Copyright 2025 Benkyou Project
  */
 
-import { query } from "@solidjs/router";
-import { createEmptyCard, type Card } from 'ts-fsrs'
-import type { WordCard } from "~/utils/words/card";
+import type { Card } from 'ts-fsrs'
+import type { WordCard } from '~/utils/words/card'
+import { query } from '@solidjs/router'
+import { createEmptyCard } from 'ts-fsrs'
 
 type Preview = {
   new: number
@@ -18,7 +19,7 @@ export const getLearningPreview = query(
     const result: Preview = await res.json()
     return result
   },
-  "getLearningPreview"
+  'getLearningPreview',
 )
 
 type NewWord = {
@@ -35,7 +36,7 @@ export const getNewCardsToLearn = query(
     const words: NewWord[] = await wordsRes.json()
     const maxSeq = words.reduce(
       (pre, cur) => pre > cur.seq ? pre : cur.seq,
-      -1
+      -1,
     )
 
     const wordCards = words.map(word => ({
@@ -45,10 +46,10 @@ export const getNewCardsToLearn = query(
 
     return { wordCards, maxSeq }
   },
-  "getNewCardsToLearn"
+  'getNewCardsToLearn',
 )
 
-const FSRS_STATE = ["New", "Learning", "Review", "Relearning"] as const
+const FSRS_STATE = ['New', 'Learning', 'Review', 'Relearning'] as const
 
 type LearningRecord = {
   due: string
@@ -59,7 +60,7 @@ type LearningRecord = {
   reps: number
   lapses: number
   state: (typeof FSRS_STATE)[number]
-  lastReview: string | null,
+  lastReview: string | null
   word: NewWord
 }
 
@@ -67,10 +68,10 @@ export const getReviewCardsToLearn = query(
   async () => {
     const res = await fetch('/api/words/review', { credentials: 'include' })
     const records: LearningRecord[] = await res.json()
-    return records.map(record => {
+    return records.map((record) => {
       const { word, due, state, lastReview, elapsedDays, scheduledDays, ...rest } = record
       return {
-        word: word,
+        word,
         card: {
           due: new Date(due),
           state: FSRS_STATE.indexOf(state),
@@ -78,11 +79,11 @@ export const getReviewCardsToLearn = query(
           elapsed_days: elapsedDays,
           scheduled_days: scheduledDays,
           ...rest,
-        }
+        },
       }
     })
   },
-  "getReviewCardsToLearn"
+  'getReviewCardsToLearn',
 )
 
 export async function saveReviewData(wordCards: WordCard[], lastSeq: number | null = null) {
@@ -105,6 +106,6 @@ function fsrsCardToDbData(card: Card) {
     scheduledDays: card.scheduled_days,
     due: card.due.toISOString(),
     lastReview: card.last_review?.toISOString(),
-    state: FSRS_STATE[card.state]
+    state: FSRS_STATE[card.state],
   }
 }

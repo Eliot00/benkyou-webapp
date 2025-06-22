@@ -3,11 +3,11 @@
  * SPDX-FileCopyrightText: Copyright 2025 Benkyou Project
  */
 
-import { ModuleCard } from "~/components/module-card";
+import { ModuleCard } from '~/components/module-card'
 
 export default function LearnPage() {
   return (
-    <div class="w-full p-2 grid grid-cols-4 gap-4">
+    <div class="grid grid-cols-4 w-full gap-4 p-2">
       <ModuleCard
         href="/learn/words"
         title="单词记忆"

@@ -3,15 +3,15 @@
  * SPDX-FileCopyrightText: Copyright 2025 Benkyou Project
  */
 
-import { betterAuth } from "better-auth";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { magicLink } from "better-auth/plugins";
-import { Resend } from "resend";
+import { betterAuth } from 'better-auth'
+import { drizzleAdapter } from 'better-auth/adapters/drizzle'
+import { magicLink } from 'better-auth/plugins'
+import { Resend } from 'resend'
 
-import { betterAuthOptions, drizzleAdapterConfig } from "./options";
-import { createDrizzleClient } from "../drizzle";
+import { createDrizzleClient } from '../drizzle'
+import { betterAuthOptions, drizzleAdapterConfig } from './options'
 
-export const auth = (env: CloudflareBindings): ReturnType<typeof betterAuth> => {
+export function auth(env: CloudflareBindings): ReturnType<typeof betterAuth> {
   const db = createDrizzleClient(env)
 
   return betterAuth({
@@ -36,11 +36,11 @@ export const auth = (env: CloudflareBindings): ReturnType<typeof betterAuth> => 
           await resend.emails.send({
             from: 'Benkyou <noreply@auth.benkyou.fun>',
             to: email,
-            subject: "Magic Link",
+            subject: 'Magic Link',
             html: `Click the link to login into your account: ${url}`,
           })
-        }
-      })
-    ]
+        },
+      }),
+    ],
   })
 }

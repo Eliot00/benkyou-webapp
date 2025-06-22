@@ -1,9 +1,7 @@
-#:schema node_modules/wrangler/config-schema.json
 name = "benkyou-server"
 compatibility_date = "2025-06-06"
-compatibility_flags = ["nodejs_compat"]
+compatibility_flags = [ "nodejs_compat" ]
 main = "src/index.ts"
-
 keep_vars = true
 
 [[hyperdrive]]

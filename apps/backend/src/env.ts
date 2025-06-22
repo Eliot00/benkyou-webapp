@@ -4,8 +4,8 @@
  */
 
 type User = {
-  id: string;
-};
+  id: string
+}
 
 export type AppEnv = {
   Bindings: CloudflareBindings

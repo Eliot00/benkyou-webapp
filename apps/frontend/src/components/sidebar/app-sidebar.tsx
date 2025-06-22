@@ -3,16 +3,15 @@
  * SPDX-FileCopyrightText: Copyright 2025 Benkyou Project
  */
 
-import { NotebookPen, Gamepad2 } from "lucide-solid"
+import { Gamepad2, NotebookPen } from 'lucide-solid'
 
 import { SidebarMenuItem } from './menu-item'
-import { UserAvatar } from "./user-avatar";
+import { UserAvatar } from './user-avatar'
 
 export default function AppSidebar() {
-
   return (
     <div
-      class="bg-sidebar text-sidebar-foreground h-full w-64 flex flex-col gap-4 p-2"
+      class="h-full w-64 flex flex-col gap-4 bg-sidebar p-2 text-sidebar-foreground"
     >
       <header class="p-2">
         乐学日语

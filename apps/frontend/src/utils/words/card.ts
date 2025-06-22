@@ -3,7 +3,7 @@
  * SPDX-FileCopyrightText: Copyright 2025 Benkyou Project
  */
 
-import { type Card, type ReviewLog } from 'ts-fsrs'
+import type { Card, ReviewLog } from 'ts-fsrs'
 
 export type WordCard = {
   word: Word
@@ -11,7 +11,7 @@ export type WordCard = {
   reviewLog: ReviewLog
 }
 
-export type InitialWordCard = Omit<WordCard, "reviewLog">
+export type InitialWordCard = Omit<WordCard, 'reviewLog'>
 
 export type Word = {
   id: string

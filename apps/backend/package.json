@@ -1,9 +1,12 @@
 {
   "name": "@benkyou/backend",
+  "type": "module",
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy --minify",
-    "cf-typegen": "wrangler types --env-interface CloudflareBindings"
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
   },
   "dependencies": {
     "better-auth": "catalog:",
@@ -13,7 +16,10 @@
     "resend": "^4.6.0"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "catalog:",
+    "@benkyou/eslint-config": "workspace:*",
     "drizzle-kit": "^0.31.1",
+    "eslint": "catalog:",
     "wrangler": "catalog:"
   }
 }

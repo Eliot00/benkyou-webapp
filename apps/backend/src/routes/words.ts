@@ -3,15 +3,15 @@
  * SPDX-FileCopyrightText: Copyright 2025 Benkyou Project
  */
 
-import { Hono } from "hono";
-import type { AppEnv } from "../env";
-import { createDrizzleClient } from "../lib/drizzle";
-import { users, wordLearningLogs, words } from "../db/schema";
-import { asc, gt, eq, count, and, lte, sql } from "drizzle-orm";
+import type { AppEnv } from '../env'
+import { and, asc, count, eq, gt, lte, sql } from 'drizzle-orm'
+import { Hono } from 'hono'
+import { users, wordLearningLogs, words } from '../db/schema'
+import { createDrizzleClient } from '../lib/drizzle'
 
 const app = new Hono<AppEnv>()
 
-app.get("/preview", async (c) => {
+app.get('/preview', async (c) => {
   const db = createDrizzleClient(c.env)
   const currentUser = c.var.user
 
@@ -24,10 +24,10 @@ app.get("/preview", async (c) => {
     review = reviewCountRes[0].count
   }
 
-  return c.json({ new: total - review, review });
-});
+  return c.json({ new: total - review, review })
+})
 
-app.get("/new", async (c) => {
+app.get('/new', async (c) => {
   const db = createDrizzleClient(c.env)
   const currentUser = c.var.user
 
@@ -44,16 +44,16 @@ app.get("/new", async (c) => {
       words.seq,
       db.select({ lastSeq: users.lastWordSeq })
         .from(users)
-        .where(eq(users.id, currentUser.id))
+        .where(eq(users.id, currentUser.id)),
     ),
     orderBy: [asc(words.seq)],
     limit: 10,
   })
 
-  return c.json(newWords);
-});
+  return c.json(newWords)
+})
 
-app.get("/review", async (c) => {
+app.get('/review', async (c) => {
   const db = createDrizzleClient(c.env)
   const currentUser = c.var.user
 
@@ -73,8 +73,8 @@ app.get("/review", async (c) => {
       eq(wordLearningLogs.userId, currentUser.id),
       lte(
         wordLearningLogs.due,
-        sql`CURRENT_DATE + interval '1 day' - interval '1 second'`
-      )
+        sql`CURRENT_DATE + interval '1 day' - interval '1 second'`,
+      ),
     ),
     with: {
       word: {
@@ -85,8 +85,8 @@ app.get("/review", async (c) => {
           kana: true,
           audio: true,
           seq: true,
-        }
-      }
+        },
+      },
     },
     orderBy: [asc(wordLearningLogs.due)],
     limit: 10,
@@ -100,13 +100,13 @@ type NewReviewBody = {
   reviewLogs: Omit<typeof wordLearningLogs.$inferInsert, 'userId'>[]
 }
 
-app.post("/review", async (c) => {
+app.post('/review', async (c) => {
   const db = createDrizzleClient(c.env)
   const currentUser = c.var.user
 
   const { lastSeq, reviewLogs } = await c.req.json<NewReviewBody>()
 
-  await db.transaction(async tx => {
+  await db.transaction(async (tx) => {
     await tx
       .insert(wordLearningLogs)
       .values(reviewLogs.map(item => ({
@@ -134,7 +134,7 @@ app.post("/review", async (c) => {
           lapses: sql`excluded.lapses`,
           state: sql`excluded.state`,
           lastReview: sql`excluded.last_review`,
-        }
+        },
       })
 
     if (lastSeq) {

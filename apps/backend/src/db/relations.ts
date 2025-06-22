@@ -5,10 +5,10 @@
 
 import { relations } from 'drizzle-orm'
 
-import { wordLearningLogs, words, users } from './schema'
+import { users, wordLearningLogs, words } from './schema'
 
 export const wordsRelations = relations(words, ({ many }) => ({
-  learningLogs: many(wordLearningLogs)
+  learningLogs: many(wordLearningLogs),
 }))
 
 export const wordLearningLogsRelations = relations(wordLearningLogs, ({ one }) => ({
@@ -19,5 +19,5 @@ export const wordLearningLogsRelations = relations(wordLearningLogs, ({ one }) =
   user: one(users, {
     fields: [wordLearningLogs.userId],
     references: [users.id],
-  })
+  }),
 }))

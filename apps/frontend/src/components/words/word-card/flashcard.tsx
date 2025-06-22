@@ -3,11 +3,12 @@
  * SPDX-FileCopyrightText: Copyright 2025 Benkyou Project
  */
 
-import { LucideVolume2 } from "lucide-solid"
-import { createSignal, Show } from "solid-js"
-import { type Grade, Rating } from "ts-fsrs"
-import { Button } from "~/components/ui/button"
-import type { Word } from "~/utils/words/card"
+import type { Grade } from 'ts-fsrs'
+import type { Word } from '~/utils/words/card'
+import { LucideVolume2 } from 'lucide-solid'
+import { createSignal, Show } from 'solid-js'
+import { Rating } from 'ts-fsrs'
+import { Button } from '~/components/ui/button'
 
 type FlashcardProps = {
   word: Word
@@ -35,8 +36,8 @@ export function Flashcard(props: FlashcardProps) {
 
   return (
     <>
-      <hgroup class="w-full text-center mb-2">
-        <h2 lang="ja" class="text-3xl font-bold w-full flex items-center justify-center">
+      <hgroup class="mb-2 w-full text-center">
+        <h2 lang="ja" class="w-full flex items-center justify-center text-3xl font-bold">
           {props.word.display}
           <Show when={props.word.audio}>
             <button
@@ -72,10 +73,10 @@ export function Flashcard(props: FlashcardProps) {
           <span class={showAnswer() ? '' : HIDDEN_TEXT_CLASS}>{props.word.defCn}</span>
         </p>
       </section>
-      <div class="p-4 w-full">
+      <div class="w-full p-4">
         <Show
           when={grade()}
-          fallback={
+          fallback={(
             <div class="grid grid-cols-3 gap-2">
               <Button
                 variant="outline"
@@ -99,7 +100,7 @@ export function Flashcard(props: FlashcardProps) {
                 忘了
               </Button>
             </div>
-          }
+          )}
         >
           <div class="grid grid-cols-2 gap-4">
             <Button

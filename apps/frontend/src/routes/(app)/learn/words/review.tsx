@@ -3,14 +3,14 @@
  * SPDX-FileCopyrightText: Copyright 2025 Benkyou Project
  */
 
-import { createAsync, type RouteDefinition } from "@solidjs/router"
-import { WordCardBox } from "~/components/words/word-card/word-card-box"
-import { getReviewCardsToLearn } from "~/services/words"
-import { saveReviewData } from "~/services/words"
+import type { RouteDefinition } from '@solidjs/router'
+import { createAsync } from '@solidjs/router'
+import { WordCardBox } from '~/components/words/word-card/word-card-box'
+import { getReviewCardsToLearn, saveReviewData } from '~/services/words'
 
 export const route = {
-  preload: () => getReviewCardsToLearn()
-} satisfies RouteDefinition;
+  preload: () => getReviewCardsToLearn(),
+} satisfies RouteDefinition
 
 export default function ReviewWordsPage() {
   const cards = createAsync(() => getReviewCardsToLearn())

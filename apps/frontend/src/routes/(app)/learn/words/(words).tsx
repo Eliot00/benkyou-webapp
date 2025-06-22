@@ -3,19 +3,19 @@
  * SPDX-FileCopyrightText: Copyright 2025 Benkyou Project
  */
 
-import { A, createAsync } from "@solidjs/router";
-import { Suspense } from "solid-js";
-import { getLearningPreview } from "~/services/words"
+import { A, createAsync } from '@solidjs/router'
+import { Suspense } from 'solid-js'
+import { getLearningPreview } from '~/services/words'
 
 export const route = {
-  preload: () => getLearningPreview()
+  preload: () => getLearningPreview(),
 }
 
 export default function WordsPage() {
   const preview = createAsync(() => getLearningPreview())
 
   return (
-    <div class="w-full h-full flex items-center justify-center gap-6">
+    <div class="h-full w-full flex items-center justify-center gap-6">
       <A href="/learn/words/new">
         <div class="hover:underline">
           👉新学

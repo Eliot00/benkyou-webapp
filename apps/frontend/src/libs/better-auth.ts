@@ -3,11 +3,11 @@
  * SPDX-FileCopyrightText: Copyright 2025 Benkyou Project
  */
 
-import { magicLinkClient } from "better-auth/client/plugins"
-import { createAuthClient } from "better-auth/solid"
+import { magicLinkClient } from 'better-auth/client/plugins'
+import { createAuthClient } from 'better-auth/solid'
 
-export const { signIn, signUp, signOut, useSession } =  createAuthClient({
+export const { signIn, signUp, signOut, useSession } = createAuthClient({
   plugins: [
-    magicLinkClient()
+    magicLinkClient(),
   ],
 })

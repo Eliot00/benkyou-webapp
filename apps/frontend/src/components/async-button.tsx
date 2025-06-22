@@ -3,38 +3,39 @@
  * SPDX-FileCopyrightText: Copyright 2025 Benkyou Project
  */
 
-import { createSignal, Show, type ParentProps } from "solid-js";
-import { Button } from "~/components/ui/button";
+import type { ParentProps } from 'solid-js'
+import { createSignal, Show } from 'solid-js'
+import { Button } from '~/components/ui/button'
 
 type BasicButtonProps = ParentProps<{
-  class?: string;
-  onClick: () => Promise<void>;
-}>;
+  class?: string
+  onClick: () => Promise<void>
+}>
 
 export function AutoLoadingButton(props: BasicButtonProps) {
-  const [loading, setLoading] = createSignal(false);
+  const [loading, setLoading] = createSignal(false)
 
   return (
     <LoadingButton
       class={props.class}
       loading={loading()}
       onClick={async () => {
-        setLoading(true);
-        await props.onClick();
-        setLoading(false);
+        setLoading(true)
+        await props.onClick()
+        setLoading(false)
       }}
     >
       {props.children}
     </LoadingButton>
-  );
+  )
 }
 
 type LoadingButtonProps = ParentProps<{
-  loading?: boolean;
-  type?: HTMLButtonElement["type"];
-  class?: string;
-  onClick?: () => void;
-}>;
+  loading?: boolean
+  type?: HTMLButtonElement['type']
+  class?: string
+  onClick?: () => void
+}>
 
 export function LoadingButton(props: LoadingButtonProps) {
   return (
@@ -62,5 +63,5 @@ export function LoadingButton(props: LoadingButtonProps) {
       </Show>
       {props.children}
     </Button>
-  );
+  )
 }

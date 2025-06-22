@@ -3,19 +3,19 @@
  * SPDX-FileCopyrightText: Copyright 2025 Benkyou Project
  */
 
-import { A } from "@solidjs/router"
-import { type ParentProps } from "solid-js"
-
+import type { ParentProps } from 'solid-js'
+import { A } from '@solidjs/router'
 
 type SidebarMenuItemProps = ParentProps<{
   href: string
 }>
 
-export const SidebarMenuItem = (props: SidebarMenuItemProps) => {
+export function SidebarMenuItem(props: SidebarMenuItemProps) {
   return (
     <A
       href={props.href}
-      class="flex items-center gap-2 w-full p-2 rounded-md hover:(bg-sidebar-accent text-sidebar-accent-foreground)">
+      class="w-full flex items-center gap-2 rounded-md p-2 hover:(bg-sidebar-accent text-sidebar-accent-foreground)"
+    >
       {props.children}
     </A>
   )

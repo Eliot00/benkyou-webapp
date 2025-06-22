@@ -3,9 +3,9 @@
  * SPDX-FileCopyrightText: Copyright 2025 Benkyou Project
  */
 
-import { createSignal } from "solid-js";
-import { Button } from "~/components/ui/button"
-import { TextField, TextFieldRoot } from "~/components/ui/textfield"
+import { createSignal } from 'solid-js'
+import { Button } from '~/components/ui/button'
+import { TextField, TextFieldRoot } from '~/components/ui/textfield'
 
 const WEEKDAYS = [
   '日曜日',
@@ -15,7 +15,7 @@ const WEEKDAYS = [
   '木曜日',
   '金曜日',
   '土曜日',
-];
+]
 
 const MONTHS = [
   'いちがつ',
@@ -29,8 +29,8 @@ const MONTHS = [
   'くがつ',
   'じゅうがつ',
   'じゅういちがつ',
-  'じゅうにがつ'
-];
+  'じゅうにがつ',
+]
 
 const DAYS = [
   'ついたち',
@@ -63,13 +63,13 @@ const DAYS = [
   'にじゅうはちにち',
   'にじゅうくにち',
   'さんじゅうにち',
-  'さんじゅういちにち'
-];
+  'さんじゅういちにち',
+]
 
 export default function DateQuiz() {
-  const [weekday, setWeekday] = createSignal("")
-  const [date, setDate] = createSignal("")
-  const [feedback, setFeedback] = createSignal("")
+  const [weekday, setWeekday] = createSignal('')
+  const [date, setDate] = createSignal('')
+  const [feedback, setFeedback] = createSignal('')
 
   const validate = () => {
     const now = new Date()
@@ -77,15 +77,16 @@ export default function DateQuiz() {
     const currentDate = MONTHS[now.getMonth()] + DAYS[now.getDate() - 1]
 
     if (currentWeekday === weekday().trim() && currentDate === date().trim()) {
-      setFeedback("✅ 正确！")
-    } else {
-      setFeedback("❌ 错误！")
+      setFeedback('✅ 正确！')
+    }
+    else {
+      setFeedback('❌ 错误！')
     }
   }
 
   return (
-    <main class="max-w-sm m-auto p-2">
-      <h1 class="font-semibold text-2xl text-center my-4">日期速答</h1>
+    <main class="m-auto max-w-sm p-2">
+      <h1 class="my-4 text-center text-2xl font-semibold">日期速答</h1>
       <form class="space-y-2">
         <TextFieldRoot onChange={setWeekday} value={weekday()}>
           <TextField placeholder="今天是周几呢？" />

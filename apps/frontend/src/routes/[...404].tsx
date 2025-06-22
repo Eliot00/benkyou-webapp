@@ -3,8 +3,8 @@
  * SPDX-FileCopyrightText: Copyright 2025 Benkyou Project
  */
 
-import { Title } from "@solidjs/meta";
-import { HttpStatusCode } from "@solidjs/start";
+import { Title } from '@solidjs/meta'
+import { HttpStatusCode } from '@solidjs/start'
 
 export default function NotFound() {
   return (
@@ -13,12 +13,14 @@ export default function NotFound() {
       <HttpStatusCode code={404} />
       <h1>Page Not Found</h1>
       <p>
-        Visit{" "}
+        Visit
+        {' '}
         <a href="https://start.solidjs.com" target="_blank">
           start.solidjs.com
-        </a>{" "}
+        </a>
+        {' '}
         to learn how to build SolidStart apps.
       </p>
     </main>
-  );
+  )
 }
