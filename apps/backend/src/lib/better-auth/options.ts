@@ -17,7 +17,12 @@ export const betterAuthOptions: BetterAuthOptions = {
         input: false,
       },
     }
-  }
+  },
+  session: {
+    cookieCache: {
+      enabled: true,
+    },
+  },
 };
 
 export const drizzleAdapterConfig: DrizzleAdapterConfig = {
