@@ -13,5 +13,6 @@ export const config = {
     "dist/**",
     "*.config.{js,mjs,ts}",
     "wrangler.toml",
+    "worker-configuration.d.ts",
   ],
 }

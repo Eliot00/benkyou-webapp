@@ -3,9 +3,18 @@ import unocssPlugin from 'unocss/vite'
 
 export default defineConfig({
   server: {
-    preset: 'cloudflare-pages',
-    rollupConfig: {
-      external: ['node:async_hooks'],
+    preset: 'cloudflare_module',
+    compatibilityDate: '2025-06-10',
+    prerender: {
+      routes: [
+        '/',
+        '/game',
+        '/game/date-quiz',
+        '/game/kata-pair',
+        '/learn',
+        '/auth/sign-in',
+        '/auth/sign-up',
+      ],
     },
   },
   vite: {

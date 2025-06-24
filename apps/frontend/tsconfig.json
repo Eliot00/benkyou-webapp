@@ -9,8 +9,8 @@
       "~/*": ["./src/*"]
     },
     "types": [
-      "vinxi/types/client",
-      "@cloudflare/workers-types/2023-07-01"
+      "./worker-configuration.d.ts",
+      "vinxi/types/client"
     ],
     "allowJs": true,
     "strict": true,

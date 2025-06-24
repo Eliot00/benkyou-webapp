@@ -16,5 +16,7 @@ export default antfu({
     './src/libs/call-handler.ts',
     './src/libs/cn.ts',
     './src/libs/combine-props.tsx',
+    './.output/**',
+    './.vinix/**',
   ],
 }, common)
