@@ -85,6 +85,7 @@ export const wordLearningLogs = pgTable('word_learning_logs', {
   lapses: integer().notNull(),
   state: fsrsCardState().notNull(),
   lastReview: timestamp('last_review', { withTimezone: true, mode: 'string' }),
+  learningSteps: integer('learning_steps').default(0).notNull(),
   createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).default(sql`timezone('utc'::text, now())`).notNull(),
 }, table => [
   primaryKey({ columns: [table.wordId, table.userId] }),

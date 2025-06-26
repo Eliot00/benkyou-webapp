@@ -40,7 +40,7 @@
         "lucide-solid": "^0.460.0",
         "solid-js": "^1.9.5",
         "tailwind-merge": "^2.5.4",
-        "ts-fsrs": "^4.5.2",
+        "ts-fsrs": "^5.2.0",
         "unocss-preset-animations": "^1.1.0",
         "vinxi": "^0.5.7",
       },
@@ -1964,7 +1964,7 @@
 
     "ts-declaration-location": ["ts-declaration-location@1.0.7", "", { "dependencies": { "picomatch": "^4.0.2" }, "peerDependencies": { "typescript": ">=4.0.0" } }, "sha512-EDyGAwH1gO0Ausm9gV6T2nUvBgXT5kGoCMJPllOaooZ+4VvJiKBdZE7wK18N1deEowhcUptS+5GXZK8U/fvpwA=="],
 
-    "ts-fsrs": ["ts-fsrs@4.7.1", "", {}, "sha512-uYqKbSCNWLRPT0PfqFFy2rn0YuYz2fKmtgpgHOBd5/DP14oj6diG7P271AwJ8iGrKnmIspzXCF+nTKxict+Lcg=="],
+    "ts-fsrs": ["ts-fsrs@5.2.0", "", {}, "sha512-r8U9AU+7/EuFmI33rr01ZyP+yNWmuOzMuT2CZk1IbW9SICFLCLicLuXBTBYJ26SVhoqudJ6D2nkdlsw9sCoYEw=="],
 
     "tslib": ["tslib@2.8.1", "", {}, "sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w=="],
 

@@ -4,7 +4,7 @@
  */
 
 import type { Card } from 'ts-fsrs'
-import type { WordCard } from '~/utils/words/card'
+import type { InitialWordCard, WordCard } from '~/utils/words/card'
 import { query } from '@solidjs/router'
 import { createEmptyCard } from 'ts-fsrs'
 
@@ -59,6 +59,7 @@ type LearningRecord = {
   difficulty: number
   elapsedDays: number
   scheduledDays: number
+  learningSteps: number
   reps: number
   lapses: number
   state: (typeof FSRS_STATE)[number]
@@ -67,17 +68,18 @@ type LearningRecord = {
 }
 
 export const getReviewCardsToLearn = query(
-  async () => {
+  async (): Promise<InitialWordCard[]> => {
     const res = await fetch(`${apiPrefix}/words/review`, { credentials: 'include' })
     const records: LearningRecord[] = await res.json()
     return records.map((record) => {
-      const { word, due, state, lastReview, elapsedDays, scheduledDays, ...rest } = record
+      const { word, due, state, lastReview, elapsedDays, scheduledDays, learningSteps, ...rest } = record
       return {
         word,
         card: {
           due: new Date(due),
           state: FSRS_STATE.indexOf(state),
           last_review: lastReview ? new Date(lastReview) : undefined,
+          learning_steps: learningSteps,
           elapsed_days: elapsedDays,
           scheduled_days: scheduledDays,
           ...rest,
@@ -105,6 +107,7 @@ function fsrsCardToDbData(card: Card) {
   return {
     ...card,
     elapsedDays: card.elapsed_days,
+    learningSteps: card.learning_steps,
     scheduledDays: card.scheduled_days,
     due: card.due.toISOString(),
     lastReview: card.last_review?.toISOString(),

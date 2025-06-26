@@ -121,6 +121,7 @@ app.post('/review', async (c) => {
         lapses: item.lapses,
         state: item.state,
         lastReview: item.lastReview,
+        learningSteps: item.learningSteps,
       })))
       .onConflictDoUpdate({
         target: [wordLearningLogs.wordId, wordLearningLogs.userId],
@@ -134,6 +135,7 @@ app.post('/review', async (c) => {
           lapses: sql`excluded.lapses`,
           state: sql`excluded.state`,
           lastReview: sql`excluded.last_review`,
+          learningSteps: sql`excluded.learning_steps`,
         },
       })
 

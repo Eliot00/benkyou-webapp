@@ -28,7 +28,7 @@
     "lucide-solid": "^0.460.0",
     "solid-js": "^1.9.5",
     "tailwind-merge": "^2.5.4",
-    "ts-fsrs": "^4.5.2",
+    "ts-fsrs": "^5.2.0",
     "unocss-preset-animations": "^1.1.0",
     "vinxi": "^0.5.7"
   },
