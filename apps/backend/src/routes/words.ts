@@ -19,7 +19,16 @@ app.get('/preview', async (c) => {
 
   let review = 0
 
-  const reviewCountRes = await db.select({ count: count() }).from(wordLearningLogs).where(eq(wordLearningLogs.userId, currentUser.id))
+  const reviewCountRes = await db
+    .select({ count: count() })
+    .from(wordLearningLogs)
+    .where(and(
+      eq(wordLearningLogs.userId, currentUser.id),
+      lte(
+        wordLearningLogs.due,
+        sql`CURRENT_DATE + interval '1 day' - interval '1 second'`,
+      ),
+    ))
   if (reviewCountRes[0]) {
     review = reviewCountRes[0].count
   }
