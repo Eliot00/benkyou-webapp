@@ -20,7 +20,15 @@ app.use(except('/auth/*', async (c, next) => {
   const session = await auth(c.env).api.getSession({ headers: c.req.raw.headers })
 
   if (!session) {
-    throw new HTTPException(401, { message: 'Unauth' })
+    throw new HTTPException(401, {
+      res: c.json({
+        error: {
+          code: 'unauthorized',
+          message: 'Authentication required',
+          details: 'Invalid or missing authentication token'
+        }
+      })
+    })
   }
 
   c.set('user', session.user)
