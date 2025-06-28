@@ -1,29 +1,331 @@
 {
-  "id": "00000000-0000-0000-0000-000000000000",
-  "prevId": "",
+  "id": "1f3c2f72-47ba-4b67-82ee-9fdfaf545371",
+  "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.word_learning_logs": {
-      "name": "word_learning_logs",
+    "public.accounts": {
+      "name": "accounts",
       "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "bigint",
+          "type": "text",
           "primaryKey": true,
+          "notNull": true
+        },
+        "account_id": {
+          "name": "account_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "provider_id": {
+          "name": "provider_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "access_token": {
+          "name": "access_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "refresh_token": {
+          "name": "refresh_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_token": {
+          "name": "id_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "access_token_expires_at": {
+          "name": "access_token_expires_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "refresh_token_expires_at": {
+          "name": "refresh_token_expires_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "scope": {
+          "name": "scope",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "password": {
+          "name": "password",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "accounts_user_id_users_id_fk": {
+          "name": "accounts_user_id_users_id_fk",
+          "tableFrom": "accounts",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.sessions": {
+      "name": "sessions",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "token": {
+          "name": "token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ip_address": {
+          "name": "ip_address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_agent": {
+          "name": "user_agent",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "sessions_user_id_users_id_fk": {
+          "name": "sessions_user_id_users_id_fk",
+          "tableFrom": "sessions",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "sessions_token_unique": {
+          "name": "sessions_token_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "token"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email_verified": {
+          "name": "email_verified",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "image": {
+          "name": "image",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "last_word_seq": {
+          "name": "last_word_seq",
+          "type": "integer",
+          "primaryKey": false,
           "notNull": true,
-          "identity": {
-            "type": "byDefault",
-            "name": "word_learning_logs_id_seq",
-            "increment": "1",
-            "minValue": "1",
-            "maxValue": "9223372036854775807",
-            "startWith": "1",
-            "cache": "1",
-            "cycle": false,
-            "schema": "public"
-          }
+          "default": -1
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "users_email_unique": {
+          "name": "users_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.verifications": {
+      "name": "verifications",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "identifier": {
+          "name": "identifier",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "value": {
+          "name": "value",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.word_learning_logs": {
+      "name": "word_learning_logs",
+      "schema": "",
+      "columns": {
+        "word_id": {
+          "name": "word_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
         },
         "due": {
           "name": "due",
@@ -80,15 +382,9 @@
           "primaryKey": false,
           "notNull": false
         },
-        "word_id": {
-          "name": "word_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "uuid",
+        "learning_steps": {
+          "name": "learning_steps",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -102,25 +398,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "word_learning_logs_user_id_fkey": {
-          "name": "word_learning_logs_user_id_fkey",
-          "tableFrom": "word_learning_logs",
-          "tableTo": "users",
-          "schemaTo": "auth",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "word_learning_logs_word_id_fkey": {
-          "name": "word_learning_logs_word_id_fkey",
+        "word_learning_logs_word_id_words_id_fk": {
+          "name": "word_learning_logs_word_id_words_id_fk",
           "tableFrom": "word_learning_logs",
           "tableTo": "words",
-          "schemaTo": "public",
           "columnsFrom": [
             "word_id"
           ],
@@ -129,48 +410,34 @@
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
+        },
+        "word_learning_logs_user_id_users_id_fk": {
+          "name": "word_learning_logs_user_id_users_id_fk",
+          "tableFrom": "word_learning_logs",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "unique_user_word": {
+      "compositePrimaryKeys": {
+        "word_learning_logs_word_id_user_id_pk": {
+          "name": "word_learning_logs_word_id_user_id_pk",
           "columns": [
             "word_id",
             "user_id"
-          ],
-          "nullsNotDistinct": false,
-          "name": "unique_user_word"
+          ]
         }
       },
+      "uniqueConstraints": {},
+      "policies": {},
       "checkConstraints": {},
-      "policies": {
-        "Individuals can view their own logs.": {
-          "name": "Individuals can view their own logs.",
-          "as": "PERMISSIVE",
-          "for": "SELECT",
-          "to": [
-            "public"
-          ],
-          "using": "(auth.uid() = user_id)"
-        },
-        "Individuals can update their own logs.": {
-          "name": "Individuals can update their own logs.",
-          "as": "PERMISSIVE",
-          "for": "UPDATE",
-          "to": [
-            "public"
-          ]
-        },
-        "Individuals can create logs.": {
-          "name": "Individuals can create logs.",
-          "as": "PERMISSIVE",
-          "for": "INSERT",
-          "to": [
-            "public"
-          ]
-        }
-      },
-      "isRLSEnabled": true
+      "isRLSEnabled": false
     },
     "public.words": {
       "name": "words",
@@ -257,111 +524,28 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "words_seq_key": {
+          "name": "words_seq_key",
+          "nullsNotDistinct": false,
           "columns": [
             "seq"
-          ],
-          "nullsNotDistinct": false,
-          "name": "words_seq_key"
-        }
-      },
-      "checkConstraints": {},
-      "policies": {
-        "Public words are viewable only by authenticated users": {
-          "name": "Public words are viewable only by authenticated users",
-          "as": "PERMISSIVE",
-          "for": "SELECT",
-          "to": [
-            "authenticated"
-          ],
-          "using": "true"
-        }
-      },
-      "isRLSEnabled": true
-    },
-    "public.learning_profiles": {
-      "name": "learning_profiles",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "last_word_seq": {
-          "name": "last_word_seq",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'-1'"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "learning_profiles_id_fkey": {
-          "name": "learning_profiles_id_fkey",
-          "tableFrom": "learning_profiles",
-          "tableTo": "users",
-          "schemaTo": "auth",
-          "columnsFrom": [
-            "id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {},
-      "policies": {
-        "Users can update own learning profile.": {
-          "name": "Users can update own learning profile.",
-          "as": "PERMISSIVE",
-          "for": "UPDATE",
-          "to": [
-            "public"
-          ],
-          "using": "(( SELECT auth.uid() AS uid) = id)"
-        },
-        "Users can insert their own learning profile.": {
-          "name": "Users can insert their own learning profile.",
-          "as": "PERMISSIVE",
-          "for": "INSERT",
-          "to": [
-            "public"
-          ]
-        },
-        "Public learning profiles are viewable by everyone.": {
-          "name": "Public learning profiles are viewable by everyone.",
-          "as": "PERMISSIVE",
-          "for": "SELECT",
-          "to": [
-            "public"
           ]
         }
       },
-      "isRLSEnabled": true
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
     }
   },
   "enums": {
     "public.fsrs_card_state": {
       "name": "fsrs_card_state",
+      "schema": "public",
       "values": [
         "New",
         "Learning",
         "Review",
         "Relearning"
-      ],
-      "schema": "public"
+      ]
     }
   },
   "schemas": {},
@@ -370,28 +554,8 @@
   "policies": {},
   "views": {},
   "_meta": {
+    "columns": {},
     "schemas": {},
-    "tables": {},
-    "columns": {}
-  },
-  "internal": {
-    "tables": {
-      "words": {
-        "columns": {
-          "tags": {
-            "isArray": true,
-            "dimensions": 1,
-            "rawType": "text"
-          }
-        }
-      },
-      "learning_profiles": {
-        "columns": {
-          "last_word_seq": {
-            "isDefaultAnExpression": true
-          }
-        }
-      }
-    }
+    "tables": {}
   }
 }

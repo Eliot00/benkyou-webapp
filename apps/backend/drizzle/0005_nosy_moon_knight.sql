@@ -1,1 +1,0 @@
-ALTER TABLE "word_learning_logs" ADD COLUMN "learning_steps" integer DEFAULT 0 NOT NULL;

@@ -4,7 +4,7 @@
  */
 
 import { sql } from 'drizzle-orm'
-import { boolean, integer, pgEnum, pgPolicy, pgTable, primaryKey, real, text, timestamp, unique, uuid } from 'drizzle-orm/pg-core'
+import { boolean, integer, pgEnum, pgTable, primaryKey, real, text, timestamp, unique, uuid } from 'drizzle-orm/pg-core'
 
 export const words = pgTable('words', {
   id: uuid().defaultRandom().primaryKey().notNull(),
@@ -21,7 +21,6 @@ export const words = pgTable('words', {
   audio: text(),
 }, table => [
   unique('words_seq_key').on(table.seq),
-  pgPolicy('Public words are viewable only by authenticated users', { as: 'permissive', for: 'select', to: ['authenticated'], using: sql`true` }),
 ])
 
 export const users = pgTable('users', {
@@ -85,7 +84,7 @@ export const wordLearningLogs = pgTable('word_learning_logs', {
   lapses: integer().notNull(),
   state: fsrsCardState().notNull(),
   lastReview: timestamp('last_review', { withTimezone: true, mode: 'string' }),
-  learningSteps: integer('learning_steps').default(0).notNull(),
+  learningSteps: integer('learning_steps').notNull(),
   createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).default(sql`timezone('utc'::text, now())`).notNull(),
 }, table => [
   primaryKey({ columns: [table.wordId, table.userId] }),

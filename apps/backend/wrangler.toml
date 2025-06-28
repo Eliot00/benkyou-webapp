@@ -6,5 +6,5 @@ keep_vars = true
 
 [[hyperdrive]]
 binding = "HYPERDRIVE"
-id = "5c3cbe6054ec4114bb08228c9463424b"
+id = "f28caff3ff8b4d1e8a888a9093587df9"
 localConnectionString = "postgresql://postgres:postgres@127.0.0.1:54322/postgres"
