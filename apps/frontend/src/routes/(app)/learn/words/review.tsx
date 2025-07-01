@@ -18,8 +18,8 @@ export default function ReviewWordsPage() {
   return (
     <WordCardBox
       cards={cards()}
-      onComplete={async (cards) => {
-        await saveReviewData(cards)
+      onComplete={async (sessions) => {
+        await saveReviewData(sessions)
       }}
     />
   )

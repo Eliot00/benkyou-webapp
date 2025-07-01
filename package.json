@@ -23,9 +23,10 @@
     ],
     "catalog": {
       "better-auth": "^1.2.9",
-      "wrangler": "^4.22.0",
+      "wrangler": "^4.24.0",
       "eslint": "^9.29.0",
-      "@antfu/eslint-config": "^4.15.0"
+      "@antfu/eslint-config": "^4.15.0",
+      "ts-fsrs": "^5.2.0"
     }
   }
 }

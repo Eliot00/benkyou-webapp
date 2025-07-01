@@ -4,6 +4,11 @@ compatibility_flags = [ "nodejs_compat" ]
 main = "src/index.ts"
 keep_vars = true
 
+[[services]]
+binding = "COLD_DATA_SERVICE"
+service = "benkyou-cold-data"
+entrypoint = "default"
+
 [[hyperdrive]]
 binding = "HYPERDRIVE"
 id = "f28caff3ff8b4d1e8a888a9093587df9"

@@ -5,13 +5,11 @@
 
 import type { Card, ReviewLog } from 'ts-fsrs'
 
-export type WordCard = {
+export type LearningSession = {
   word: Word
   card: Card
-  reviewLog: ReviewLog
+  logs: ReviewLog[]
 }
-
-export type InitialWordCard = Omit<WordCard, 'reviewLog'>
 
 export type Word = {
   id: string

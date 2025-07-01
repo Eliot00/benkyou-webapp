@@ -4,7 +4,7 @@
  */
 
 import type { Card } from 'ts-fsrs'
-import type { InitialWordCard, WordCard } from '~/utils/words/card'
+import type { LearningSession } from '~/utils/words/card'
 import { query } from '@solidjs/router'
 import { createEmptyCard } from 'ts-fsrs'
 
@@ -44,6 +44,7 @@ export const getNewCardsToLearn = query(
     const wordCards = words.map(word => ({
       word,
       card: createEmptyCard(),
+      logs: []
     }))
 
     return { wordCards, maxSeq }
@@ -68,7 +69,7 @@ type LearningRecord = {
 }
 
 export const getReviewCardsToLearn = query(
-  async (): Promise<InitialWordCard[]> => {
+  async (): Promise<LearningSession[]> => {
     const res = await fetch(`${apiPrefix}/words/review`, { credentials: 'include' })
     const records: LearningRecord[] = await res.json()
     return records.map((record) => {
@@ -84,22 +85,30 @@ export const getReviewCardsToLearn = query(
           scheduled_days: scheduledDays,
           ...rest,
         },
+        logs: []
       }
     })
   },
   'getReviewCardsToLearn',
 )
 
-export async function saveReviewData(wordCards: WordCard[], lastSeq: number | null = null) {
-  const reviewLogs = wordCards.map(wordCard => ({
-    wordId: wordCard.word.id,
-    ...fsrsCardToDbData(wordCard.card),
-  }))
+export async function saveReviewData(rawSessions: LearningSession[], lastSeq: number | null = null) {
+  const sessions = rawSessions.map(session => {
+
+    return {
+      wordId: session.word.id,
+      learningOutcome: fsrsCardToDbData(session.card),
+      logs: session.logs,
+    }
+  })
 
   await fetch(`${apiPrefix}/words/review`, {
     method: 'POST',
     credentials: 'include',
-    body: JSON.stringify({ reviewLogs, lastSeq }),
+    body: JSON.stringify({ sessions, lastSeq }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
   })
 }
 

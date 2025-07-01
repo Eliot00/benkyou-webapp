@@ -4,7 +4,7 @@
  */
 
 import type { Grade } from 'ts-fsrs'
-import type { InitialWordCard, WordCard } from '~/utils/words/card'
+import type { LearningSession } from '~/utils/words/card'
 import { A } from '@solidjs/router'
 import { createEffect, Match, Switch } from 'solid-js'
 import { createStore, produce } from 'solid-js/store'
@@ -20,14 +20,14 @@ import { Skeleton } from '~/components/ui/skeleton'
 import { Flashcard } from './flashcard'
 
 export type WordCardBoxProps = {
-  cards?: InitialWordCard[]
-  onComplete: (cards: WordCard[]) => Promise<void>
+  cards?: LearningSession[]
+  onComplete: (sessions: LearningSession[]) => Promise<void>
 }
 
 type WordCardBoxUiState = {
   status: 'loading' | 'learning' | 'summarizing' | 'completed' | 'idle'
-  learningCards: InitialWordCard[]
-  reviewCards: WordCard[]
+  learningSessions: LearningSession[]
+  finalSessions: LearningSession[]
 }
 
 const params = generatorParameters({ enable_fuzz: true })
@@ -36,8 +36,8 @@ const f = new FSRS(params)
 export function WordCardBox(props: WordCardBoxProps) {
   const [state, setState] = createStore<WordCardBoxUiState>({
     status: 'loading',
-    learningCards: [],
-    reviewCards: [],
+    learningSessions: [],
+    finalSessions: [],
   })
 
   createEffect(() => {
@@ -47,7 +47,7 @@ export function WordCardBox(props: WordCardBoxProps) {
         setState(
           produce((state) => {
             state.status = 'learning'
-            state.learningCards = [...cards]
+            state.learningSessions = [...cards]
           }),
         )
       }
@@ -55,28 +55,26 @@ export function WordCardBox(props: WordCardBoxProps) {
   })
 
   const gradeCard = (grade: Grade) => {
-    const oldWordCard = state.learningCards[0]
-
-    const recordLog = f.repeat(oldWordCard.card, new Date())
-    const recordLogItem = recordLog[grade]
-
-    const newWordCard: WordCard = {
-      word: oldWordCard.word,
-      card: recordLogItem.card,
-      reviewLog: recordLogItem.log,
-    }
 
     setState(
       produce((state) => {
-        state.learningCards.shift()
-        if (newWordCard.card.state === State.Review) {
-          if (state.learningCards.length === 0) {
+        const currentSession = {...state.learningSessions[0]}
+
+        const recordLog = f.repeat(currentSession.card, new Date())
+        const recordLogItem = recordLog[grade]
+
+        currentSession.card = recordLogItem.card
+        currentSession.logs.push(recordLogItem.log)
+
+        state.learningSessions.shift()
+        if (recordLogItem.card.state === State.Review) {
+          if (state.learningSessions.length === 0) {
             state.status = 'summarizing'
           }
-          state.reviewCards.push(newWordCard)
+          state.finalSessions.push(currentSession)
         }
         else {
-          state.learningCards.push(newWordCard)
+          state.learningSessions.push(currentSession)
         }
       }),
     )
@@ -99,13 +97,13 @@ export function WordCardBox(props: WordCardBoxProps) {
           </CardFooter>
         </Match>
         <Match when={state.status === 'learning'}>
-          <Flashcard word={state.learningCards[0].word} onGrade={gradeCard} />
+          <Flashcard word={state.learningSessions[0].word} onGrade={gradeCard} />
         </Match>
         <Match when={state.status === 'summarizing'}>
           <AutoLoadingButton
             class="my-auto"
             onClick={async () => {
-              await props.onComplete(state.reviewCards)
+              await props.onComplete(state.finalSessions)
               setState('status', 'completed')
             }}
           >

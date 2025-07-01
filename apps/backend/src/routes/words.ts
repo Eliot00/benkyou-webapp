@@ -8,6 +8,8 @@ import { and, asc, count, eq, gt, lte, sql } from 'drizzle-orm'
 import { Hono } from 'hono'
 import { users, wordLearningLogs, words } from '../db/schema'
 import { createDrizzleClient } from '../lib/drizzle'
+import { nullable, number, object, string, union, literal, array } from 'valibot'
+import { vValidator } from '@hono/valibot-validator'
 
 const app = new Hono<AppEnv>()
 
@@ -104,33 +106,60 @@ app.get('/review', async (c) => {
   return c.json(res)
 })
 
-type NewReviewBody = {
-  lastSeq: number | null
-  reviewLogs: Omit<typeof wordLearningLogs.$inferInsert, 'userId'>[]
-}
+const schema = object({
+  lastSeq: nullable(number()),
+  sessions: array(
+    object({
+      wordId: string(),
+      learningOutcome: object({
+        due: string(),
+        stability: number(),
+        difficulty: number(),
+        elapsedDays: number(),
+        scheduledDays: number(),
+        reps: number(),
+        lapses: number(),
+        state: union([
+          literal("New"),
+          literal("Learning"),
+          literal("Review"),
+          literal("Relearning"),
+        ]),
+        lastReview: nullable(string()),
+        learningSteps: number(),
+      }),
+      logs: array(object({
+        difficulty: number(),
+        due: string(),
+        elapsed_days: number(),
+        last_elapsed_days: number(),
+        learning_steps: number(),
+        rating: number(),
+        review: string(),
+        scheduled_days: number(),
+        stability: number(),
+        state: number(),
+      }))
+    })
+  ),
+})
 
-app.post('/review', async (c) => {
-  const db = createDrizzleClient(c.env)
-  const currentUser = c.var.user
+app.post(
+  '/review',
+  vValidator('json', schema),
+  async (c) => {
+    const db = createDrizzleClient(c.env)
+    const currentUser = c.var.user
 
-  const { lastSeq, reviewLogs } = await c.req.json<NewReviewBody>()
+    const { lastSeq, sessions } = c.req.valid('json')
 
-  await db.transaction(async (tx) => {
-    await tx
+    await db.transaction(async (tx) => {
+      await tx
       .insert(wordLearningLogs)
-      .values(reviewLogs.map(item => ({
-        wordId: item.wordId,
+      .values(sessions.map(session => ({
+        ...session.learningOutcome,
+        wordId: session.wordId,
         userId: currentUser.id,
-        due: item.due,
-        stability: item.stability,
-        difficulty: item.difficulty,
-        elapsedDays: item.elapsedDays,
-        scheduledDays: item.scheduledDays,
-        reps: item.reps,
-        lapses: item.lapses,
-        state: item.state,
-        lastReview: item.lastReview,
-        learningSteps: item.learningSteps,
       })))
       .onConflictDoUpdate({
         target: [wordLearningLogs.wordId, wordLearningLogs.userId],
@@ -148,12 +177,22 @@ app.post('/review', async (c) => {
         },
       })
 
-    if (lastSeq) {
-      await tx.update(users).set({ lastWordSeq: lastSeq }).where(eq(users.id, currentUser.id))
-    }
-  })
+      if (lastSeq) {
+        await tx.update(users).set({ lastWordSeq: lastSeq }).where(eq(users.id, currentUser.id))
+      }
+    })
 
-  return c.json({ ok: true })
+    await c.env.COLD_DATA_SERVICE.saveReviewLogs(
+      sessions.flatMap(({ wordId, logs }) => {
+        return logs.map(log => ({
+          ...log,
+          word_id: wordId,
+          user_id: currentUser.id,
+        }))
+      })
+    )
+
+    return c.json({ ok: true })
 })
 
 export default app

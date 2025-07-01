@@ -18,8 +18,8 @@ export default function NewWordsPage() {
   return (
     <WordCardBox
       cards={data()?.wordCards}
-      onComplete={async (cards) => {
-        await saveReviewData(cards, data()?.maxSeq)
+      onComplete={async (sessions) => {
+        await saveReviewData(sessions, data()?.maxSeq)
       }}
     />
   )

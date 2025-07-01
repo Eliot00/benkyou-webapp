@@ -1,0 +1,11 @@
+name = "benkyou-cold-data"
+main = "./src/index.ts"
+compatibility_date = "2025-07-01"
+compatibility_flags = [ "nodejs_compat" ]
+
+workers_dev = false
+
+[[workflows]]
+name = "review-logs-workflow"
+binding = "REVIEW_LOGS_WORKFLOW"
+class_name = "ReviewLogsWorkflow"
