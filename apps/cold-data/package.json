@@ -1,0 +1,13 @@
+{
+  "name": "mongo-service",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest",
+    "wrangler": "^4.22.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
