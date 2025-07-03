@@ -25,6 +25,12 @@
         "wrangler": "catalog:",
       },
     },
+    "apps/cold-data": {
+      "name": "@benkyou/cold-data",
+      "devDependencies": {
+        "wrangler": "catalog:",
+      },
+    },
     "apps/frontend": {
       "name": "@benkyou/frontend",
       "dependencies": {
@@ -137,6 +143,8 @@
     "@babel/types": ["@babel/types@7.27.6", "", { "dependencies": { "@babel/helper-string-parser": "^7.27.1", "@babel/helper-validator-identifier": "^7.27.1" } }, "sha512-ETyHEk2VHHvl9b9jZP5IHPavHYk57EhanlRRuae9XCpb/j5bDCbPPMOBfCWhnl/7EDJz0jEMCi/RhccCE8r1+Q=="],
 
     "@benkyou/backend": ["@benkyou/backend@workspace:apps/backend"],
+
+    "@benkyou/cold-data": ["@benkyou/cold-data@workspace:apps/cold-data"],
 
     "@benkyou/eslint-config": ["@benkyou/eslint-config@workspace:packages/eslint-config"],
 

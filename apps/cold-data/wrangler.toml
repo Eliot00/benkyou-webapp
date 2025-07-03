@@ -1,4 +1,4 @@
-name = "benkyou-review-logs"
+name = "benkyou-cold-data"
 main = "./src/index.ts"
 compatibility_date = "2025-07-01"
 
