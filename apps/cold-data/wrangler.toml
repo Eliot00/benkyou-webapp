@@ -1,6 +1,6 @@
 name = "benkyou-cold-data"
 main = "./src/index.ts"
-compatibility_date = "2025-07-01"
+compatibility_date = "2025-07-11"
 compatibility_flags = [ "nodejs_compat" ]
 
 workers_dev = false

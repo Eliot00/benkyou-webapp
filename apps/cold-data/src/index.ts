@@ -21,19 +21,25 @@ export default class CodeDataService extends WorkerEntrypoint<CloudflareBindings
   }
 
   async saveReviewLogs(logs: ReviewLog[]) {
-    await this.env.REVIEW_LOGS_WORKFLOW.create({ params: logs })
+    await this.env.REVIEW_LOGS_WORKFLOW.create({ params: { logs } })
   }
 }
 
 export class ReviewLogsWorkflow extends WorkflowEntrypoint<CloudflareBindings> {
-  override async run(event: WorkflowEvent<ReviewLog[]>, step: WorkflowStep) {
+  override async run(event: WorkflowEvent<{ logs: ReviewLog[] }>, step: WorkflowStep) {
     return step.do("save review logs", async () => {
-      const client = new MongoClient(this.env.MONGO_DB_URI)
+      const client = new MongoClient(this.env.MONGO_DB_URI, {
+        maxPoolSize: 1,
+        minPoolSize: 0,
+        serverSelectionTimeoutMS: 5000
+      })
       try {
         await client.connect()
         const db = client.db('benkyou')
         const collection = db.collection('reviewLogs')
-        await collection.insertMany(event.payload)
+
+        const { logs } = event.payload
+        await collection.insertMany(logs)
       } finally {
         await client.close()
       }

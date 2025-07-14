@@ -182,15 +182,19 @@ app.post(
       }
     })
 
-    await c.env.COLD_DATA_SERVICE.saveReviewLogs(
-      sessions.flatMap(({ wordId, logs }) => {
-        return logs.map(log => ({
-          ...log,
-          word_id: wordId,
-          user_id: currentUser.id,
-        }))
-      })
-    )
+    try {
+      await c.env.COLD_DATA_SERVICE.saveReviewLogs(
+        sessions.flatMap(({ wordId, logs }) => {
+          return logs.map(log => ({
+            ...log,
+            word_id: wordId,
+            user_id: currentUser.id,
+          }))
+        })
+      )
+    } catch (e) {
+      console.warn(`RPC error: ${e}`)
+    }
 
     return c.json({ ok: true })
 })
