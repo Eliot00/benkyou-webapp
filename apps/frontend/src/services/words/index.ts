@@ -15,14 +15,11 @@ type Preview = {
   review: number
 }
 
-export const getLearningPreview = query(
-  async () => {
-    const res = await fetch(`${apiPrefix}/words/preview`, { credentials: 'include' })
-    const result: Preview = await res.json()
-    return result
-  },
-  'getLearningPreview',
-)
+export async function getLearningPreview() {
+  const res = await fetch('/api/words/preview', { credentials: 'include' })
+  const result: Preview = await res.json()
+  return result
+}
 
 type NewWord = {
   id: string
