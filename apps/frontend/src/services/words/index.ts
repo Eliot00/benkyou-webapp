@@ -8,8 +8,6 @@ import type { LearningSession } from '~/utils/words/card'
 import { query } from '@solidjs/router'
 import { createEmptyCard } from 'ts-fsrs'
 
-import { apiPrefix } from '~/utils/api'
-
 type Preview = {
   new: number
   review: number
@@ -17,9 +15,10 @@ type Preview = {
 
 export const getLearningPreview = query(
   async () => {
-    const res = await fetch(`${apiPrefix}/words/preview`, { credentials: 'include' })
-    const result: Preview = await res.json()
-    return result
+    const response = await fetch('/api/words/preview', {
+      credentials: 'include',
+    })
+    return await response.json<Preview>()
   },
   'getLearningPreview',
 )
@@ -34,8 +33,10 @@ type NewWord = {
 }
 export const getNewCardsToLearn = query(
   async () => {
-    const wordsRes = await fetch(`${apiPrefix}/words/new`, { credentials: 'include' })
-    const words: NewWord[] = await wordsRes.json()
+    const wordsRes = await fetch('/api/words/new', {
+      credentials: 'include',
+    })
+    const words = await wordsRes.json<NewWord[]>()
     const maxSeq = words.reduce(
       (pre, cur) => pre > cur.seq ? pre : cur.seq,
       -1,
@@ -70,8 +71,10 @@ type LearningRecord = {
 
 export const getReviewCardsToLearn = query(
   async (): Promise<LearningSession[]> => {
-    const res = await fetch(`${apiPrefix}/words/review`, { credentials: 'include' })
-    const records: LearningRecord[] = await res.json()
+    const response = await fetch('/api/words/review', {
+      credentials: 'include',
+    })
+    const records = await response.json<LearningRecord[]>()
     return records.map((record) => {
       const { word, due, state, lastReview, elapsedDays, scheduledDays, learningSteps, ...rest } = record
       return {
@@ -102,7 +105,7 @@ export async function saveReviewData(rawSessions: LearningSession[], lastSeq: nu
     }
   })
 
-  await fetch(`${apiPrefix}/words/review`, {
+  await fetch('/api/words/review', {
     method: 'POST',
     credentials: 'include',
     body: JSON.stringify({ sessions, lastSeq }),

@@ -2,7 +2,7 @@
   "name": "@benkyou/cold-data",
   "type": "module",
   "scripts": {
-    "dev": "export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt && wrangler dev --port 8788",
+    "dev": "wrangler dev --port 8788",
     "deploy": "wrangler deploy --minify --keep-vars",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings"
   },

@@ -2,7 +2,7 @@
   "name": "@benkyou/backend",
   "type": "module",
   "scripts": {
-    "dev": "export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt && wrangler dev",
+    "dev": "wrangler dev",
     "deploy": "wrangler deploy --minify --keep-vars",
     "cf-typegen": "wrangler types -c wrangler.toml -c ../cold-data/wrangler.toml --env-interface CloudflareBindings",
     "lint": "eslint",

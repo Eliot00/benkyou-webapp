@@ -12,4 +12,3 @@ entrypoint = "default"
 [[hyperdrive]]
 binding = "HYPERDRIVE"
 id = "f28caff3ff8b4d1e8a888a9093587df9"
-localConnectionString = "postgresql://devuser:devpass@127.0.0.1:5432/devdb"

@@ -9,8 +9,7 @@
       "~/*": ["./src/*"]
     },
     "types": [
-      "./worker-configuration.d.ts",
-      "vinxi/types/client"
+      "./worker-configuration.d.ts"
     ],
     "allowJs": true,
     "strict": true,
@@ -18,5 +17,6 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "isolatedModules": true
-  }
+  },
+  "include": ["src"]
 }

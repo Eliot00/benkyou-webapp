@@ -7,10 +7,6 @@ import { A, createAsync } from '@solidjs/router'
 import { Suspense } from 'solid-js'
 import { getLearningPreview } from '~/services/words'
 
-export const route = {
-  preload: () => getLearningPreview(),
-}
-
 export default function WordsPage() {
   const preview = createAsync(() => getLearningPreview())
 

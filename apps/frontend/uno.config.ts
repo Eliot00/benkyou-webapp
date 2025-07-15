@@ -1,14 +1,14 @@
 import {
   defineConfig,
-  presetUno,
   transformerDirectives,
   transformerVariantGroup,
+  presetWind3,
 } from 'unocss'
-import presetAnimations from 'unocss-preset-animations'
+import { presetAnimations } from 'unocss-preset-animations'
 
 export default defineConfig({
   presets: [
-    presetUno({
+    presetWind3({
       dark: {
         dark: '[data-kb-theme="dark"]',
         light: '[data-kb-theme="light"]',

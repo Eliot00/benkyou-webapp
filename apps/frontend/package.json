@@ -5,10 +5,8 @@
     "node": ">=18"
   },
   "scripts": {
-    "dev": "vinxi dev",
-    "build": "vinxi build",
-    "start": "vinxi start",
-    "version": "vinxi version",
+    "dev": "rsbuild dev --open",
+    "build": "rsbuild build",
     "preview": "bun run build && npx wrangler dev",
     "deploy": "bun run build && wrangler deploy",
     "cf-typegen": "wrangler types",
@@ -20,25 +18,27 @@
     "@kobalte/core": "^0.13.7",
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.15.3",
-    "@solidjs/start": "^1.1.5",
-    "@unocss/reset": "^0.64.1",
+    "@unocss/reset": "^66.4.1",
     "better-auth": "catalog:",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-solid": "^0.460.0",
-    "solid-js": "^1.9.5",
+    "solid-js": "^1.9.8",
     "tailwind-merge": "^2.5.4",
     "ts-fsrs": "catalog:",
-    "unocss-preset-animations": "^1.1.0",
-    "vinxi": "^0.5.7"
+    "unocss-preset-animations": "^1.1.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:",
     "@benkyou/eslint-config": "workspace:*",
+    "@rsbuild/core": "^1.4.11",
+    "@rsbuild/plugin-babel": "^1.0.5",
+    "@rsbuild/plugin-solid": "^1.0.5",
     "@unocss/eslint-plugin": "^66.2.3",
+    "@unocss/postcss": "^66.4.1",
     "eslint": "catalog:",
     "eslint-plugin-solid": "^0.14.5",
-    "unocss": "^0.64.1",
+    "unocss": "^66.4.1",
     "wrangler": "catalog:"
   }
 }
