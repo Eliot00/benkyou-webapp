@@ -5,7 +5,7 @@
 
 import type { Card } from 'ts-fsrs'
 import type { LearningSession } from '~/utils/words/card'
-import { query } from '@solidjs/router'
+import { query, revalidate } from '@solidjs/router'
 import { createEmptyCard } from 'ts-fsrs'
 
 import { apiPrefix } from '~/utils/api'
@@ -110,6 +110,7 @@ export async function saveReviewData(rawSessions: LearningSession[], lastSeq: nu
       'Content-Type': 'application/json',
     },
   })
+  revalidate(getLearningPreview.key)
 }
 
 function fsrsCardToDbData(card: Card) {
