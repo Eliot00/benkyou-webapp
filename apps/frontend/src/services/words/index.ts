@@ -99,7 +99,7 @@ export async function saveReviewData(rawSessions: LearningSession[], lastSeq: nu
     }
   })
 
-  await fetch('/api/words/review', {
+  await fetch(`${apiPrefix}/words/review`, {
     method: 'POST',
     credentials: 'include',
     body: JSON.stringify({ sessions, lastSeq }),
