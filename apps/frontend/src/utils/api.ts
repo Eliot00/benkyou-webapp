@@ -3,7 +3,7 @@ import { getHeader } from 'vinxi/http'
 
 export const apiPrefix: string = isServer ? import.meta.env.VITE_API_PREFIX : '/api'
 
-export async function get(endpoint: string) {
+export async function get<T>(endpoint: string): Promise<T> {
   let url = endpoint
   const options: RequestInit = {
     method: 'GET',
@@ -17,8 +17,13 @@ export async function get(endpoint: string) {
     const cookie = event ? (getHeader(event.nativeEvent, 'Cookie') || '' ) : ''
 
     options.headers = {
+      Cookie: cookie,
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
     }
   }
 
   const response = await fetch(url, options)
+
+  return await response.json<T>()
 }
