@@ -9,7 +9,7 @@ export async function get<T>(endpoint: string): Promise<T> {
   }
 
   if (isServer) {
-    url = `${import.meta.env.VITE_API_HOST}/${endpoint}`
+    url = `${import.meta.env.VITE_API_HOST}${endpoint}`
 
     const event = getRequestEvent()
     const cookie = event ? (getHeader(event.nativeEvent, 'Cookie') || '' ) : ''
