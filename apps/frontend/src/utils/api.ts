@@ -1,8 +1,6 @@
 import { getRequestEvent, isServer } from 'solid-js/web'
 import { getHeader } from 'vinxi/http'
 
-export const apiPrefix: string = isServer ? import.meta.env.VITE_API_PREFIX : '/api'
-
 export async function get<T>(endpoint: string): Promise<T> {
   let url = endpoint
   const options: RequestInit = {
@@ -18,7 +16,7 @@ export async function get<T>(endpoint: string): Promise<T> {
 
     options.headers = {
       Cookie: cookie,
-      'Accept': 'application/json',
+      Accept: 'application/json',
       'Content-Type': 'application/json'
     }
   }

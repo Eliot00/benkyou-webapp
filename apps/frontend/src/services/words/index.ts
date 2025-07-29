@@ -8,7 +8,7 @@ import type { LearningSession } from '~/utils/words/card'
 import { query, revalidate } from '@solidjs/router'
 import { createEmptyCard } from 'ts-fsrs'
 
-import { apiPrefix } from '~/utils/api'
+import { get } from '~/utils/api'
 
 type Preview = {
   new: number
@@ -17,9 +17,7 @@ type Preview = {
 
 export const getLearningPreview = query(
   async () => {
-    const res = await fetch(`${apiPrefix}/words/preview`, { credentials: 'include' })
-    const result: Preview = await res.json()
-    return result
+    return await get<Preview>('/api/words/preview')
   },
   'getLearningPreview',
 )
@@ -34,8 +32,7 @@ type NewWord = {
 }
 export const getNewCardsToLearn = query(
   async () => {
-    const wordsRes = await fetch(`${apiPrefix}/words/new`, { credentials: 'include' })
-    const words: NewWord[] = await wordsRes.json()
+    const words = await get<NewWord[]>('/api/words/new')
     const maxSeq = words.reduce(
       (pre, cur) => pre > cur.seq ? pre : cur.seq,
       -1,
@@ -70,8 +67,7 @@ type LearningRecord = {
 
 export const getReviewCardsToLearn = query(
   async (): Promise<LearningSession[]> => {
-    const res = await fetch(`${apiPrefix}/words/review`, { credentials: 'include' })
-    const records: LearningRecord[] = await res.json()
+    const records = await get<LearningRecord[]>('/api/words/review')
     return records.map((record) => {
       const { word, due, state, lastReview, elapsedDays, scheduledDays, learningSteps, ...rest } = record
       return {
@@ -102,7 +98,7 @@ export async function saveReviewData(rawSessions: LearningSession[], lastSeq: nu
     }
   })
 
-  await fetch(`${apiPrefix}/words/review`, {
+  await fetch('/api/words/review', {
     method: 'POST',
     credentials: 'include',
     body: JSON.stringify({ sessions, lastSeq }),
