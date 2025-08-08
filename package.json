@@ -5,17 +5,20 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "format": "dprint fmt \"**/*.{js,jsx,ts,tsx}\"",
+    "check-types": "turbo run check-types",
+    "prepare": "husky"
   },
   "devDependencies": {
-    "prettier": "^3.5.3",
+    "dprint": "^0.50.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.4",
     "turbo": "^2.5.4"
   },
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "bun@1.2.14",
+  "packageManager": "bun@1.2.19",
   "workspaces": {
     "packages": [
       "apps/*",
@@ -28,5 +31,8 @@
       "@antfu/eslint-config": "^4.15.0",
       "ts-fsrs": "^5.2.0"
     }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "dprint fmt"
   }
 }
