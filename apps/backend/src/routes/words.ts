@@ -35,7 +35,16 @@ app.get('/preview', async (c) => {
     review = reviewCountRes[0].count
   }
 
-  return c.json({ new: total - review, review })
+  let learned = 0
+  const learnedCountRes = await db
+    .select({ count: count() })
+    .from(wordLearningLogs)
+    .where(eq(wordLearningLogs.userId, currentUser.id))
+  if (learnedCountRes[0]) {
+    learned = learnedCountRes[0].count
+  }
+
+  return c.json({ new: total - learned, review })
 })
 
 app.get('/new', async (c) => {
