@@ -51,7 +51,7 @@ export function Flashcard(props: FlashcardProps) {
             <audio
               ref={audioRef}
               src={
-                `https://${import.meta.env.VITE_SUPABASE_PROJECT_ID}.supabase.co/storage/v1/object/public/audio/words/${props.word.audio}`
+                `${import.meta.env.PUBLIC_OSS_PREFIX}/audio/words/${props.word.audio}`
               }
             />
           </Show>
