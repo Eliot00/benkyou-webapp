@@ -3,21 +3,23 @@
  * SPDX-FileCopyrightText: Copyright 2025 Benkyou Project
  */
 
-import { Router, Route } from '@solidjs/router'
-import '@unocss/reset/tailwind-compat.css'
+import { Route, Router } from '@solidjs/router';
+import { lazy } from 'solid-js';
+import '@unocss/reset/tailwind-compat.css';
 
-import '~/app.css'
-import { AppLayout, WordsLayout } from '~/layouts'
-import Home from '~/routes/home'
-import Learn from '~/routes/learn'
-import Words from '~/routes/learn/words'
-import NewWords from '~/routes/learn/words/new'
-import ReviewWords from '~/routes/learn/words/review'
-import Game from '~/routes/game'
-import DateQuiz from '~/routes/game/date-quiz'
-import KataPair from '~/routes/game/kata-pair'
-import SignIn from '~/routes/auth/sign-in'
-import SignUp from '~/routes/auth/sign-up'
+import '~/app.css';
+import { AppLayout } from '~/layouts';
+
+const Home = lazy(() => import('~/routes/home'));
+const Learn = lazy(() => import('~/routes/learn'));
+const Words = lazy(() => import('~/routes/learn/words'));
+const NewWords = lazy(() => import('~/routes/learn/words/new'));
+const ReviewWords = lazy(() => import('~/routes/learn/words/review'));
+const Game = lazy(() => import('~/routes/game'));
+const DateQuiz = lazy(() => import('~/routes/game/date-quiz'));
+const KataPair = lazy(() => import('~/routes/game/kata-pair'));
+const SignIn = lazy(() => import('~/routes/auth/sign-in'));
+const SignUp = lazy(() => import('~/routes/auth/sign-up'));
 
 export default function App() {
   return (
@@ -27,7 +29,7 @@ export default function App() {
         <Route path="/learn">
           <Route path="/" component={Learn} />
           <Route path="/words" component={Words} />
-          <Route path="/words" component={WordsLayout}>
+          <Route path="/words">
             <Route path="/new" component={NewWords} />
             <Route path="/review" component={ReviewWords} />
           </Route>
@@ -43,5 +45,5 @@ export default function App() {
         <Route path="/sign-up" component={SignUp} />
       </Route>
     </Router>
-  )
+  );
 }

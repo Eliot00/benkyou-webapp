@@ -76,63 +76,65 @@ export function WordCardBox(props: WordCardBoxProps) {
   };
 
   return (
-    <Card class="h-140 w-80 flex flex-col justify-between p-2">
-      <Switch>
-        <Match when={state.status === 'loading'}>
-          <CardHeader>
-            <Skeleton class="h-4 w-20" />
-          </CardHeader>
-          <CardContent>
-            <Skeleton class="h-50 w-60" />
-          </CardContent>
-          <CardFooter class="flex items-center">
-            <Skeleton class="h-8 w-18" />
-            <Skeleton class="h-8 w-18" />
-            <Skeleton class="h-8 w-18" />
-          </CardFooter>
-        </Match>
-        <Match when={state.status === 'learning'}>
-          <Flashcard word={state.learningSessions[0].word} onGrade={gradeCard} />
-        </Match>
-        <Match when={state.status === 'summarizing'}>
-          <CardFooter class="flex items-center justify-between my-auto">
-            <Button
-              onClick={() => setState('status', 'spelling')}
-              variant="outline"
-            >
-              拼写练习
-            </Button>
-            <AutoLoadingButton
-              onClick={async () => {
-                await props.onComplete(state.finalSessions);
-                setState('status', 'completed');
-              }}
-            >
-              完成学习
-            </AutoLoadingButton>
-          </CardFooter>
-        </Match>
-        <Match when={state.status === 'spelling'}>
-          <SpellingDrill
-            words={state.finalSessions.map(s => s.word)}
-            onComplete={() => setState('status', 'summarizing')}
-          />
-        </Match>
-        <Match when={state.status === 'completed'}>
-          <div class="m-auto">
-            已完成，
-            <A
-              href="/learn/words"
-              class="text-primary underline-offset-4 hover:underline"
-            >
-              回到单词主页
-            </A>
-          </div>
-        </Match>
-        <Match when={state.status === 'idle'}>
-          <div>没有新的学习任务</div>
-        </Match>
-      </Switch>
-    </Card>
+    <div class="h-full w-full flex items-center justify-center">
+      <Card class="h-140 w-80 flex flex-col justify-between p-2">
+        <Switch>
+          <Match when={state.status === 'loading'}>
+            <CardHeader>
+              <Skeleton class="h-4 w-20" />
+            </CardHeader>
+            <CardContent>
+              <Skeleton class="h-50 w-60" />
+            </CardContent>
+            <CardFooter class="flex items-center">
+              <Skeleton class="h-8 w-18" />
+              <Skeleton class="h-8 w-18" />
+              <Skeleton class="h-8 w-18" />
+            </CardFooter>
+          </Match>
+          <Match when={state.status === 'learning'}>
+            <Flashcard word={state.learningSessions[0].word} onGrade={gradeCard} />
+          </Match>
+          <Match when={state.status === 'summarizing'}>
+            <CardFooter class="flex items-center justify-between my-auto">
+              <Button
+                onClick={() => setState('status', 'spelling')}
+                variant="outline"
+              >
+                拼写练习
+              </Button>
+              <AutoLoadingButton
+                onClick={async () => {
+                  await props.onComplete(state.finalSessions);
+                  setState('status', 'completed');
+                }}
+              >
+                完成学习
+              </AutoLoadingButton>
+            </CardFooter>
+          </Match>
+          <Match when={state.status === 'spelling'}>
+            <SpellingDrill
+              words={state.finalSessions.map(s => s.word)}
+              onComplete={() => setState('status', 'summarizing')}
+            />
+          </Match>
+          <Match when={state.status === 'completed'}>
+            <div class="m-auto">
+              已完成，
+              <A
+                href="/learn/words"
+                class="text-primary underline-offset-4 hover:underline"
+              >
+                回到单词主页
+              </A>
+            </div>
+          </Match>
+          <Match when={state.status === 'idle'}>
+            <div>没有新的学习任务</div>
+          </Match>
+        </Switch>
+      </Card>
+    </div>
   );
 }
