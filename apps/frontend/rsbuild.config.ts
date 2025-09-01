@@ -1,7 +1,6 @@
 import { defineConfig } from '@rsbuild/core';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginSolid } from '@rsbuild/plugin-solid';
-import UnoCSS from '@unocss/postcss'
 
 export default defineConfig({
   html: {
@@ -31,11 +30,7 @@ export default defineConfig({
     pluginSolid(),
   ],
   tools: {
-    postcss: {
-      postcssOptions: {
-        plugins: [UnoCSS()],
-      },
-    },
+    postcss: {},
   },
   server: {
     proxy: {

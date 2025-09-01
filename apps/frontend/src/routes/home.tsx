@@ -3,15 +3,15 @@
  * SPDX-FileCopyrightText: Copyright 2025 Benkyou Project
  */
 
-import { LucideSparkles } from 'lucide-solid'
+import { SparklesIcon } from 'lucide-solid';
 
 export default function HomePage() {
   return (
     <div class="h-full w-full flex items-center justify-center">
       <div class="flex items-center gap-2">
-        <LucideSparkles size="1em" />
+        <SparklesIcon size="1em" />
         欢迎回来，点击左侧菜单栏探索更多学习内容吧σ`∀´)σ
       </div>
     </div>
-  )
+  );
 }

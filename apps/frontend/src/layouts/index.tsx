@@ -8,7 +8,7 @@ import AppSidebar from '~/components/sidebar/app-sidebar';
 
 export function AppLayout(props: RouteSectionProps) {
   return (
-    <div class="h-vh w-full flex">
+    <div class="h-screen w-full flex">
       <AppSidebar />
       <main class="h-full w-full">
         {props.children}

@@ -5,7 +5,6 @@
 
 import { Route, Router } from '@solidjs/router';
 import { lazy } from 'solid-js';
-import '@unocss/reset/tailwind-compat.css';
 
 import '~/app.css';
 import { AppLayout } from '~/layouts';
