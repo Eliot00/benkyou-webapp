@@ -4,9 +4,7 @@
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy --minify --keep-vars",
-    "cf-typegen": "wrangler types -c wrangler.toml -c ../cold-data/wrangler.toml --env-interface CloudflareBindings",
-    "lint": "eslint",
-    "lint:fix": "eslint --fix"
+    "cf-typegen": "wrangler types -c wrangler.toml -c ../cold-data/wrangler.toml --env-interface CloudflareBindings"
   },
   "dependencies": {
     "@hono/valibot-validator": "^0.5.3",
@@ -18,10 +16,7 @@
     "valibot": "^1.1.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "catalog:",
-    "@benkyou/eslint-config": "workspace:*",
     "drizzle-kit": "^0.31.1",
-    "eslint": "catalog:",
     "wrangler": "catalog:"
   }
 }
