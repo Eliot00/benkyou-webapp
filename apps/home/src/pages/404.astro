@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+    <main>
+        <h1 class="error-code">404</h1>
+        <p lang="ja">あら？道に迷ってしまいましたね！</p>
+        <a href="/" class="home-link">🏠 回到首頁</a>
+    </main>
+</Layout>
+
+<style>
+    main {
+        width: 100vw;
+        height: 100svh;
+        background-color: oklch(0.986 0 358.73967248753775);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .error-code {
+        font-size: 6rem;
+        font-weight: bold;
+        color: oklch(0.84 0.14 20);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        margin: 0;
+    }
+
+    p {
+        color: oklch(0.15 0.02 320);
+        margin: 0;
+    }
+
+    .home-link {
+        display: inline-block;
+        padding: 0.375rem 0.75rem;
+        background-color: oklch(0.71 0.14 237);
+        color: white;
+        text-decoration: none;
+        border-radius: 0.5rem;
+    }
+
+    .home-link:hover {
+        opacity: .9;
+    }
+</style>
