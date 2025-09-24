@@ -7,7 +7,7 @@ keep_vars = true
 [[services]]
 binding = "COLD_DATA_SERVICE"
 service = "benkyou-cold-data"
-entrypoint = "default"
+entrypoint = "CodeDataService"
 
 [[hyperdrive]]
 binding = "HYPERDRIVE"
