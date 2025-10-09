@@ -1,0 +1,21 @@
+---
+import { getCollection, render } from 'astro:content'
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const tips = await getCollection('tips');
+  return tips.map(tip => ({
+    params: { id: tip.id },
+    props: { tip },
+  }));
+}
+
+const { tip } = Astro.props;
+const { Content } = await render(tip);
+---
+<Layout>
+    <main>
+        <h1>{tip.data.title}</h1>
+        <Content />
+    </main>
+</Layout>
