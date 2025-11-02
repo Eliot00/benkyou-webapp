@@ -1,20 +1,29 @@
-<!doctype html>
+---
+const {
+  title = 'Benkyou.fun - Learn Japanese with Joy',
+  description =
+    'Master Japanese through interactive lessons, games, and community. Start your journey to fluency today!',
+} = Astro.props;
+---
+
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <meta name="generator" content={Astro.generator} />
-        <title>Benkyou</title>
-    </head>
-    <body>
-        <slot />
-    </body>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-    </style>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description}>
+  </head>
+  <body>
+    <slot />
+  </body>
+  <style>
+  * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+  }
+  </style>
 </html>
