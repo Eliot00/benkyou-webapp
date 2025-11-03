@@ -6,6 +6,7 @@ const tips = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/data/tips' }),
   schema: z.object({
     title: z.string(),
+    pubDate: z.coerce.date(),
   }),
 });
 

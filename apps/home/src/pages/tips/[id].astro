@@ -14,8 +14,171 @@ const { tip } = Astro.props;
 const { Content } = await render(tip);
 ---
 <Layout>
-    <main>
-        <h1>{tip.data.title}</h1>
-        <Content />
+    <main class="container">
+        <article class="tip-article">
+            <header class="tip-header">
+                <h1 class="tip-title">{tip.data.title}</h1>
+                {tip.data.pubDate && (
+                    <time class="tip-date">{new Date(tip.data.pubDate).toLocaleDateString('zh-CN')}</time>
+                )}
+            </header>
+            <div class="tip-content">
+                <Content />
+            </div>
+        </article>
     </main>
 </Layout>
+
+<style>
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem;
+    }
+
+    .tip-article {
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .tip-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 3rem 2rem 2rem;
+        text-align: center;
+    }
+
+    .tip-title {
+        margin: 0;
+        font-size: 2.5rem;
+        font-weight: 700;
+        line-height: 1.2;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .tip-date {
+        display: inline-block;
+        margin-top: 1rem;
+        font-size: 0.95rem;
+        opacity: 0.9;
+        font-weight: 300;
+    }
+
+    .tip-content {
+        padding: 2.5rem 2rem;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #333;
+    }
+
+    /* 內容樣式 */
+    .tip-content :global(h2) {
+        margin-top: 2.5rem;
+        margin-bottom: 1rem;
+        font-size: 1.8rem;
+        color: #667eea;
+        border-bottom: 2px solid #e5e7eb;
+        padding-bottom: 0.5rem;
+    }
+
+    .tip-content :global(h3) {
+        margin-top: 2rem;
+        margin-bottom: 0.75rem;
+        font-size: 1.4rem;
+        color: #555;
+    }
+
+    .tip-content :global(p) {
+        margin-bottom: 1.25rem;
+    }
+
+    .tip-content :global(ul),
+    .tip-content :global(ol) {
+        margin-bottom: 1.5rem;
+        padding-left: 1.5rem;
+    }
+
+    .tip-content :global(li) {
+        margin-bottom: 0.5rem;
+    }
+
+    .tip-content :global(code) {
+        background: #f3f4f6;
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-size: 0.9em;
+        color: #e83e8c;
+        font-family: 'Consolas', 'Monaco', monospace;
+    }
+
+    .tip-content :global(pre) {
+        background: #1e293b;
+        color: #e2e8f0;
+        padding: 1.5rem;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 1.5rem 0;
+    }
+
+    .tip-content :global(pre code) {
+        background: transparent;
+        padding: 0;
+        color: inherit;
+    }
+
+    .tip-content :global(blockquote) {
+        border-left: 4px solid #667eea;
+        padding-left: 1.5rem;
+        margin: 1.5rem 0;
+        color: #555;
+        font-style: italic;
+        background: #f8f9fa;
+        padding: 1rem 1.5rem;
+        border-radius: 0 8px 8px 0;
+    }
+
+    .tip-content :global(a) {
+        color: #667eea;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.2s;
+    }
+
+    .tip-content :global(a:hover) {
+        border-bottom-color: #667eea;
+    }
+
+    .tip-content :global(img) {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin: 1.5rem 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 響應式設計 */
+    @media (max-width: 768px) {
+        .container {
+            padding: 1rem;
+        }
+
+        .tip-title {
+            font-size: 2rem;
+        }
+
+        .tip-header {
+            padding: 2rem 1.5rem 1.5rem;
+        }
+
+        .tip-content {
+            padding: 1.5rem 1rem;
+            font-size: 1rem;
+        }
+
+        .tip-content :global(h2) {
+            font-size: 1.5rem;
+        }
+    }
+</style>
